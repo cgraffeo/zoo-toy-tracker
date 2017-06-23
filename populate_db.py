@@ -14,7 +14,7 @@ giraffe1 = Animal(name = 'Riley', age = 22, species = 'Giraffe')
 session.add(giraffe1)
 session.commit()
 
-toy1 = Toy(name = "Antlers", type = "Sensory", animal = giraffe1)
+toy1 = Toy(name = "Antlers", type = "Sensory", description = "Antlers from a deer that provide sensory stimulation for the animal.", animal = giraffe1)
 
 session.add(toy1)
 session.commit()

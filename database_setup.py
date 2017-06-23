@@ -22,6 +22,7 @@ class Toy(Base):
     name = Column(String(80), nullable = False)
     animal_id = Column(Integer, ForeignKey('animal.id'))
     type = Column(String(10))
+    description = Column(String(160))
     animal = relationship(Animal)
 
 
