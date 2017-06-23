@@ -1,4 +1,7 @@
 <html>
+    <head>
+        <link href="{{ url_for('static', filename='style.css') }}">
+    </head>
     <body>
         <h1>{{ animal.name }}</h1>
 
@@ -9,6 +12,10 @@
         </br>
 
         {{ toy.type }}
+
+        </br>
+
+        {{ toy.description }}
 
     </body>
 </html>
