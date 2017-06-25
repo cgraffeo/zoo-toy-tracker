@@ -29,8 +29,6 @@ def showToys(animal_id):
     return render_template('toys.html', toys = toys, animal = animal)
 
 
-
-
 if __name__ == '__main__':
     app.debug = True
     app.run(host = '0.0.0.0', port = 5000)
