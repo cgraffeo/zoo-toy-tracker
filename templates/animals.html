@@ -8,9 +8,11 @@
 
         {% for animal in animals %}
 
-        {{ animal.name }}
-        {{ animal.age }}
-        {{ animal.species }}
+        Name: {{ animal.name }}
+        </br>
+        Age: {{ animal.age }}
+        </br>
+        Species: {{ animal.species }}
 
         <a href="{{ url_for('showToys', animal_id = animal.id) }}"><p>{{ animal.name }}</p></a>
 

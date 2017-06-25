@@ -9,7 +9,7 @@ engine = create_engine('sqlite:///animal_toys.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
-session = DBSession
+session = DBSession()
 
 
 @app.route('/')
@@ -33,4 +33,4 @@ def showToys(animal_id):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host = '0.0.0.0', port = 8083)
+    app.run(host = '0.0.0.0', port = 5000)
