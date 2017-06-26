@@ -12,6 +12,25 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+@app.route('/animals/JSON')
+def animalsJSON():
+    animals = session.query(Animal).all()
+    return jsonify(animals=[animal.serialize for animal in animals])
+
+
+@app.route('/animal/<int:animal_id>/toys/JSON')
+def oneAnimalsToysJSON(animal_id):
+    animal = session.query(Animal).filter_by(id=animal_id).one()
+    toys = session.query(Toy).filter_by(animal_id=animal_id).all()
+    return jsonify(Toys=[toy.serialize for toy in toys])
+
+
+@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/JSON')
+def oneAnimalsOneToyJSON(animal_id, toy_id):
+    Toy = session.query(Toy).filter_by(id=toy_id).one()
+    return jsonify(Toy=Toy.serialize)
+
+
 @app.route('/')
 @app.route('/animals')
 def showAnimals():
