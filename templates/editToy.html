@@ -1,0 +1,59 @@
+<html>
+
+    <head>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+
+        <h1>Edit Toy</h1>
+
+        <form action="#" method="post">
+
+        	<p>Name:</p>
+        	<input type="text" size="30" name="name" placeholder="{{ toy.name }}">
+            </br>
+            <p>Type:</p>
+        	<select name="type">
+
+                {% if toy.type == 'Sensory' %}
+                <option value="Sensory" selected>Sensory</option>
+                {% else %}
+                <option value="Sensory">Sensory</option>
+                {% endif %}
+
+                {% if toy.type == 'Foods and Feeding' %}
+                <option value="Foods and Feeding" selected>Foods and Feeding</option>
+                {% else %}
+                <option value="Foods and Feeding">Foods and Feeding</option>
+                {% endif %}
+
+                {% if toy.type == 'Manipulative' %}
+                <option value="Manipulative" selected>Manipulative</option>
+                {% else %}
+                <option value="Manipulative">Manipulative</option>
+                {% endif %}
+
+                {% if toy.type == 'Environment' %}
+                <option value="Environment" selected>Environment</option>
+                {% else %}
+                <option value="Environment">Environment</option>
+                {% endif %}
+
+                {% if toy.type =='Behavioral/Social' %}
+                <option value="Behavioral/Social" selected>Behavioral/Social</option>
+                {% else %}
+                <option value="Behavioral/Social">Behavioral/Social</option>
+                {% endif %}
+
+            </select>
+            </br>
+            <p>Description:</p>
+        	<textarea name="description" placeholder="{{ toy.description }}"></textarea>
+            </br>
+            </br>
+            <input type="submit" value="Save changes">
+
+        </form>
+
+    </body>
+</html>

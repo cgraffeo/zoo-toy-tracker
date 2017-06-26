@@ -84,7 +84,19 @@ def newToy(animal_id):
 
 @app.route('/animal/<int:animal_id>/toys/<int:toy_id>/edit', methods=['GET', 'POST'])
 def editToy(animal_id, toy_id):
-    return 'This page will be for editing this toy for this animal'
+    editedToy = session.query(Toy).filter_by(id=toy_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedToy.name = request.form['name']
+        if request.form['type']:
+            editedToy.price = request.form['type']
+        if request.form['description']:
+            editedToy.description = request.form['description']
+        session.add(editedToy)
+        session.commit()
+        return redirect(url_for('showToys', animal_id=animal_id))
+    else:
+        return render_template('editToy.html', animal_id=animal_id, toy_id=toy_id, toy=editedToy)
 
 
 @app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete', methods=['GET', 'POST'])
