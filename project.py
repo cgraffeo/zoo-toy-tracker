@@ -22,14 +22,16 @@ def showAnimals():
 
 @app.route('/animal/new', methods=['GET', 'POST'])
 def newAnimal():
-    return 'This page will be for making a new animal'
-    # if request.method == 'POST':
-    #     newAnimal = Animal(name=request.form['name'])
-    #     session.add(newAnimal)
-    #     session.commit()
-    #     return redirect(url_for('showAnimals'))
-    # else:
-    #     return render_template('newAnimal.html')
+    # return 'This page will be for making a new animal'
+    if request.method == 'POST':
+        newAnimal = Animal(name=request.form['name'],
+                           age=request.form['age'],
+                           species=request.form['species'])
+        session.add(newAnimal)
+        session.commit()
+        return redirect(url_for('showAnimals'))
+    else:
+        return render_template('newAnimal.html')
 
 
 @app.route('/animal/<int:animal_id>/edit', methods=['GET', 'POST'])
