@@ -101,7 +101,13 @@ def editToy(animal_id, toy_id):
 
 @app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete', methods=['GET', 'POST'])
 def deleteToy(animal_id, toy_id):
-    return 'This page will be for deleting this toy for this animal'
+    toyForRemoval = session.query(Toy).filter_by(id=toy_id).one()
+    if request.method == 'POST':
+        session.delete(toyForRemoval)
+        session.commit()
+        return redirect(url_for('showToys', animal_id=animal_id))
+    else:
+        return render_template('deleteToy.html', toy=toyForRemoval)
 
 
 if __name__ == '__main__':

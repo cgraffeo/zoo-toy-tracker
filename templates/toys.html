@@ -7,10 +7,10 @@
 
         </br>
         <a href="{{ url_for('showAnimals') }}">Show Animals</a>
-
+        </br>
         </br>
         <a href="{{ url_for('newToy', animal_id=animal.id) }}">Add toy</a>
-
+        </br>
         </br>
 
         {% for toy in toys %}
@@ -29,6 +29,8 @@
         <a href="{{ url_for('editToy', animal_id=animal.id, toy_id=toy.id) }}">Edit</a>
         </br>
         <a href="{{ url_for('deleteToy', animal_id=animal.id, toy_id=toy.id) }}">Delete</a>
+        </br>
+        </br>
         {% endfor %}
     </body>
 </html>
