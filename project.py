@@ -52,7 +52,13 @@ def editAnimal(animal_id):
 
 @app.route('/animal/<int:animal_id>/delete', methods=['GET', 'POST'])
 def deleteAnimal(animal_id):
-    return 'This page will be for deleting this animal'
+    animalForRemoval = session.query(Animal).filter_by(id=animal_id).one()
+    if request.method == 'POST':
+        session.delete(animalForRemoval)
+        session.commit()
+        return redirect(url_for('showAnimals', animal_id=animal_id))
+    else:
+        return render_template('deleteAnimal.html', animal=animalForRemoval)
 
 
 @app.route('/animal/<int:animal_id>')
