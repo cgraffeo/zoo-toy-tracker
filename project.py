@@ -20,8 +20,19 @@ def showAnimals():
     return render_template('animals.html', animals = animals)
 
 
-@app.route('/animal/<int:animal_id>/')
-@app.route('/animal/<int:animal_id>/toys/')
+@app.route('/animal/new', methods=['GET', 'POST'])
+def newAnimal():
+    if request.method == 'POST':
+        newAnimal = Animal(name=request.form['name'])
+        session.add(newAnimal)
+        session.commit()
+        return redirect(url_for('showAnimals'))
+    else:
+        return render_template('newAnimal.html')
+
+
+@app.route('/animal/<int:animal_id>')
+@app.route('/animal/<int:animal_id>/toys')
 def showToys(animal_id):
     animal = session.query(Animal).filter_by(id = animal_id).one()
     toys = session.query(Toy).filter_by(animal_id = animal_id).all()
