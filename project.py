@@ -66,13 +66,20 @@ def deleteAnimal(animal_id):
 def showToys(animal_id):
     animal = session.query(Animal).filter_by(id=animal_id).one()
     toys = session.query(Toy).filter_by(animal_id=animal_id).all()
-    #return 'This page will list the toys for a particular animal.'
     return render_template('toys.html', toys=toys, animal=animal)
 
 
 @app.route('/animal/<int:animal_id>/toys/new', methods=['GET', 'POST'])
 def newToy(animal_id):
-    return 'This page will be for making a new toy for this animal'
+    if request.method == 'POST':
+        newToy = Toy(name=request.form['name'],
+                     type=request.form['type'],
+                     description=request.form['description'], animal_id=animal_id)
+        session.add(newToy)
+        session.commit()
+        return redirect(url_for('showToys', animal_id=animal_id))
+    else:
+        return render_template('newToy.html', animal_id=animal_id)
 
 
 @app.route('/animal/<int:animal_id>/toys/<int:toy_id>/edit', methods=['GET', 'POST'])
