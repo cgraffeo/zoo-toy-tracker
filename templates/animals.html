@@ -6,7 +6,10 @@
     <body>
         <h1>Animals</h1>
 
-        <a href="#">Add animal</a>
+        <a href="{{ url_for('newAnimal') }}">Add animal</a>
+
+        </br>
+        </br>
 
         {% for animal in animals %}
 
@@ -15,8 +18,12 @@
         Age: {{ animal.age }}
         </br>
         Species: {{ animal.species }}
-
-        <a href="{{ url_for('showToys', animal_id = animal.id) }}"><p>Toys</p></a>
+        </br>
+        <a href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
+        </br>
+        <a href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
+        </br>
+        <a href="{{ url_for('showToys', animal_id=animal.id) }}"><p>Toys</p></a>
 
         {% endfor %}
     </body>
