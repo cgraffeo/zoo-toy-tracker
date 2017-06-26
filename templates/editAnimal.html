@@ -1,0 +1,28 @@
+<html>
+
+    <head>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+
+        <h1>Edit Animal</h1>
+
+        <form action="{{ url_for('editAnimal', animal_id=animal.id) }}" method="post">
+
+        	<p>Name:</p>
+        	<input type="text" size="30" name="name" placeholder="{{ animal.name }}">
+            </br>
+            <p>Age:</p>
+        	<input type="number" size="30" name="age" placeholder="{{ animal.age }}">
+            </br>
+            <p>Species:</p>
+        	<input type="text" size="30" name="species" placeholder="{{ animal.species }}">
+            </br>
+            </br>
+        <input type='submit' value='Save changes'>
+        <a href="{{ url_for('showAnimals') }}">Cancel</a>
+
+        </form>
+
+    </body>
+</html>

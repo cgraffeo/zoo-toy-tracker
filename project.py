@@ -22,7 +22,6 @@ def showAnimals():
 
 @app.route('/animal/new', methods=['GET', 'POST'])
 def newAnimal():
-    # return 'This page will be for making a new animal'
     if request.method == 'POST':
         newAnimal = Animal(name=request.form['name'],
                            age=request.form['age'],
@@ -36,7 +35,19 @@ def newAnimal():
 
 @app.route('/animal/<int:animal_id>/edit', methods=['GET', 'POST'])
 def editAnimal(animal_id):
-    return 'This page will be for editing this animal'
+    editedAnimal = session.query(Animal).filter_by(id=animal_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedAnimal.name = request.form['name']
+        if request.form['age']:
+            editedAnimal.age = request.form['age']
+        if request.form['species']:
+            editedAnimal.species = request.form['species']
+        session.add(editedAnimal)
+        session.commit()
+        return redirect(url_for('showAnimals'))
+    else:
+        return render_template('editAnimal.html', animal=editedAnimal)
 
 
 @app.route('/animal/<int:animal_id>/delete', methods=['GET', 'POST'])
