@@ -6,6 +6,9 @@
         <h1>{{ animal.name }}</h1>
 
         </br>
+        <a href="{{ url_for('showAnimals') }}">Show Animals</a>
+
+        </br>
         <a href="{{ url_for('newToy', animal_id=animal.id) }}">Add toy</a>
 
         </br>
