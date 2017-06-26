@@ -5,6 +5,11 @@
     <body>
         <h1>{{ animal.name }}</h1>
 
+        </br>
+        <a href="{{ url_for('newToy', animal_id=animal.id) }}">Add toy</a>
+
+        </br>
+
         {% for toy in toys %}
 
         Toy name: {{ toy.name }}
@@ -16,6 +21,11 @@
         </br>
 
         Description: {{ toy.description }}
+
+        </br>
+        <a href="{{ url_for('editToy', animal_id=animal.id, toy_id=toy.id) }}">Edit</a>
+        </br>
+        <a href="{{ url_for('deleteToy', animal_id=animal.id, toy_id=toy.id) }}">Delete</a>
         {% endfor %}
     </body>
 </html>

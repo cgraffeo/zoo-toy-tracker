@@ -51,6 +51,21 @@ def showToys(animal_id):
     return render_template('toys.html', toys=toys, animal=animal)
 
 
+@app.route('/animal/<int:animal_id>/toys/new', methods=['GET', 'POST'])
+def newToy(animal_id):
+    return 'This page will be for making a new toy for this animal'
+
+
+@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/edit', methods=['GET', 'POST'])
+def editToy(animal_id, toy_id):
+    return 'This page will be for editing this toy for this animal'
+
+
+@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete', methods=['GET', 'POST'])
+def deleteToy(animal_id, toy_id):
+    return 'This page will be for deleting this toy for this animal'
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host = '0.0.0.0', port = 5000)
