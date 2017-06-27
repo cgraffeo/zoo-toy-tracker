@@ -47,6 +47,7 @@ def newAnimal():
                            species=request.form['species'])
         session.add(newAnimal)
         session.commit()
+        flash('New animal created!')
         return redirect(url_for('showAnimals'))
     else:
         return render_template('newAnimal.html')
@@ -64,6 +65,7 @@ def editAnimal(animal_id):
             editedAnimal.species = request.form['species']
         session.add(editedAnimal)
         session.commit()
+        flash('Animal successfully edited!')
         return redirect(url_for('showAnimals'))
     else:
         return render_template('editAnimal.html', animal=editedAnimal)
@@ -75,6 +77,7 @@ def deleteAnimal(animal_id):
     if request.method == 'POST':
         session.delete(animalForRemoval)
         session.commit()
+        flash('Animal successfully deleted!')
         return redirect(url_for('showAnimals', animal_id=animal_id))
     else:
         return render_template('deleteAnimal.html', animal=animalForRemoval)
@@ -96,6 +99,7 @@ def newToy(animal_id):
                      description=request.form['description'], animal_id=animal_id)
         session.add(newToy)
         session.commit()
+        flash('New toy created!')
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('newToy.html', animal_id=animal_id)
@@ -113,6 +117,7 @@ def editToy(animal_id, toy_id):
             editedToy.description = request.form['description']
         session.add(editedToy)
         session.commit()
+        flash('Toy successfully edited!')
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('editToy.html', animal_id=animal_id, toy_id=toy_id, toy=editedToy)
@@ -124,6 +129,7 @@ def deleteToy(animal_id, toy_id):
     if request.method == 'POST':
         session.delete(toyForRemoval)
         session.commit()
+        flash('Toy successfully deleted!')
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('deleteToy.html', toy=toyForRemoval)
