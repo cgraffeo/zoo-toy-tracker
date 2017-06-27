@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+        <script src="//apis.google.com/js/platform.js?onload=start"> </script>
+    </head>
+
+    <body>
+
+        <div id="signinButton">
+            <span class="g-signin"
+                data-scope="openid email"
+                data-clientid="958412084489-7o0ll5uoutqh7ogfsld64039knr13jc9.apps.googleusercontent.com"
+                data-redirecturi="postmessage"
+                data-accesstype="offline"
+                data-cookiepolicy="single_host_origin"
+                data-callback="signInCallback"
+                data-approvalprompt="force">
+            </span>
+        </div>
+        <div id="result"></div>
+
+    </body>
+</html>
