@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for
+from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Animal, Toy
@@ -130,5 +130,6 @@ def deleteToy(animal_id, toy_id):
 
 
 if __name__ == '__main__':
+    app.secret_key = 'secret_key_!@#'
     app.debug = True
     app.run(host = '0.0.0.0', port = 5000)
