@@ -14,6 +14,15 @@ class Animal(Base):
     age = Column(Integer)
     species = Column(String(50), nullable = False)
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'species': self.species
+        }
+
 
 class Toy(Base):
     __tablename__ = 'toy'
@@ -21,9 +30,19 @@ class Toy(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(80), nullable = False)
     animal_id = Column(Integer, ForeignKey('animal.id'))
-    type = Column(String(10))
+    toy_type = Column(String(10))
     description = Column(String(160))
     animal = relationship(Animal)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'animal_id': self.animal_id,
+            'toy_type': self.toy_type,
+            'description': self.description
+        }
 
 
 engine = create_engine('sqlite:///animal_toys.db')

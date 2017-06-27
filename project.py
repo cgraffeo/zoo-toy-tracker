@@ -27,8 +27,8 @@ def oneAnimalsToysJSON(animal_id):
 
 @app.route('/animal/<int:animal_id>/toys/<int:toy_id>/JSON')
 def oneAnimalsOneToyJSON(animal_id, toy_id):
-    Toy = session.query(Toy).filter_by(id=toy_id).one()
-    return jsonify(Toy=Toy.serialize)
+    oneToy = session.query(Toy).filter_by(id=toy_id).one()
+    return jsonify(oneToy=oneToy.serialize)
 
 
 @app.route('/')
@@ -92,7 +92,7 @@ def showToys(animal_id):
 def newToy(animal_id):
     if request.method == 'POST':
         newToy = Toy(name=request.form['name'],
-                     type=request.form['type'],
+                     toy_type=request.form['toy_type'],
                      description=request.form['description'], animal_id=animal_id)
         session.add(newToy)
         session.commit()
@@ -107,8 +107,8 @@ def editToy(animal_id, toy_id):
     if request.method == 'POST':
         if request.form['name']:
             editedToy.name = request.form['name']
-        if request.form['type']:
-            editedToy.price = request.form['type']
+        if request.form['toy_type']:
+            editedToy.toy_type = request.form['toy_type']
         if request.form['description']:
             editedToy.description = request.form['description']
         session.add(editedToy)

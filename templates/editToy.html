@@ -13,33 +13,33 @@
         	<input type="text" size="30" name="name" placeholder="{{ toy.name }}">
             </br>
             <p>Type:</p>
-        	<select name="type">
+        	<select name="toy_type">
 
-                {% if toy.type == 'Sensory' %}
+                {% if toy.toy_type == 'Sensory' %}
                 <option value="Sensory" selected>Sensory</option>
                 {% else %}
                 <option value="Sensory">Sensory</option>
                 {% endif %}
 
-                {% if toy.type == 'Foods and Feeding' %}
+                {% if toy.toy_type == 'Foods and Feeding' %}
                 <option value="Foods and Feeding" selected>Foods and Feeding</option>
                 {% else %}
                 <option value="Foods and Feeding">Foods and Feeding</option>
                 {% endif %}
 
-                {% if toy.type == 'Manipulative' %}
+                {% if toy.toy_type == 'Manipulative' %}
                 <option value="Manipulative" selected>Manipulative</option>
                 {% else %}
                 <option value="Manipulative">Manipulative</option>
                 {% endif %}
 
-                {% if toy.type == 'Environment' %}
+                {% if toy.toy_type == 'Environment' %}
                 <option value="Environment" selected>Environment</option>
                 {% else %}
                 <option value="Environment">Environment</option>
                 {% endif %}
 
-                {% if toy.type =='Behavioral/Social' %}
+                {% if toy.toy_type =='Behavioral/Social' %}
                 <option value="Behavioral/Social" selected>Behavioral/Social</option>
                 {% else %}
                 <option value="Behavioral/Social">Behavioral/Social</option>
