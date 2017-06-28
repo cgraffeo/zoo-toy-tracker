@@ -1,8 +1,8 @@
 <html>
     <head>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=">
+        </script>
         <script src="//apis.google.com/js/platform.js?onload=start"> </script>
     </head>
 
@@ -22,7 +22,7 @@
         <div id="result"></div>
 
         <script>
-            function(authResult) {
+            function signInCallback(authResult) {
                 if (authResult['code']) {
                     $('#signinButton').attr('style', 'display: none');
                     $.ajax({
@@ -35,7 +35,7 @@
                             if (result) {
                                 $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...')
                                 setTimeout(function() {
-                                    window.location.href = "/animal";
+                                    window.location.href = "/animals";
                                 }, 4000);
                             } else if (authResult['error']) {
                                 console.log('There was an error: ' + authResult['error']);
