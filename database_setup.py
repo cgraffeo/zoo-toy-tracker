@@ -6,11 +6,21 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), nullable=False)
+    email = Column(String(100), nullable=False)
+    picture = Column(String(250))
+
+
 class Animal(Base):
     __tablename__ = 'animal'
 
     id = Column(Integer, primary_key = True)
-    name = Column(String(10), nullable = False)
+    name = Column(String(30), nullable = False)
     age = Column(Integer)
     species = Column(String(50), nullable = False)
 
