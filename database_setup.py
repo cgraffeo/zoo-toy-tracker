@@ -11,8 +11,8 @@ class User(Base):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(50), nullable=False)
-    email = Column(String(100), nullable=False)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
     picture = Column(String(250))
 
 
@@ -23,6 +23,8 @@ class Animal(Base):
     name = Column(String(30), nullable = False)
     age = Column(Integer)
     species = Column(String(50), nullable = False)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):
@@ -30,7 +32,8 @@ class Animal(Base):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'species': self.species
+            'species': self.species,
+            'user_id': self.user_id
         }
 
 
@@ -43,6 +46,8 @@ class Toy(Base):
     toy_type = Column(String(10))
     description = Column(String(160))
     animal = relationship(Animal)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):
@@ -51,7 +56,8 @@ class Toy(Base):
             'name': self.name,
             'animal_id': self.animal_id,
             'toy_type': self.toy_type,
-            'description': self.description
+            'description': self.description,
+            'user_id': self.user_id
         }
 
 

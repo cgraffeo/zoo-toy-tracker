@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, make_response, session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Animal, Toy
+from database_setup import Base, Animal, Toy, User
 import random, string, os, json, requests, httplib2
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 
 CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Zoo Toy Tracker"
+
 app = Flask(__name__)
 
 engine = create_engine('sqlite:///animal_toys.db')
@@ -97,7 +98,7 @@ def gconnect():
     login_session['provider'] = 'google'
 
     # see if user exists, if it doesn't make a new one
-    user_id = getUserID(data["email"])
+    user_id = getUserID(login_session["email"])
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
@@ -137,9 +138,8 @@ def getUserID(email):
     except:
         return None
 
+
 # DISCONNECT - Revoke a current user's token and reset their login_session
-
-
 @app.route('/gdisconnect')
 def gdisconnect():
     # Only disconnect a connected user.
@@ -192,8 +192,10 @@ def oneAnimalsOneToyJSON(animal_id, toy_id):
 @app.route('/animals')
 def showAnimals():
     animals = session.query(Animal).all()
-    #return 'This page will list all the animals.'
-    return render_template('animals.html', animals=animals)
+    if 'username' not in login_session:
+        return render_template('publicAnimals.html', animals=animals)
+    else:
+        return render_template('animals.html', animals=animals)
 
 
 @app.route('/animal/new', methods=['GET', 'POST'])
@@ -203,7 +205,8 @@ def newAnimal():
     if request.method == 'POST':
         newAnimal = Animal(name=request.form['name'],
                            age=request.form['age'],
-                           species=request.form['species'])
+                           species=request.form['species'],
+                           user_id=login_session['user_id'])
         session.add(newAnimal)
         session.commit()
         flash('New animal created!')
@@ -214,9 +217,11 @@ def newAnimal():
 
 @app.route('/animal/<int:animal_id>/edit', methods=['GET', 'POST'])
 def editAnimal(animal_id):
+    editedAnimal = session.query(Animal).filter_by(id=animal_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    editedAnimal = session.query(Animal).filter_by(id=animal_id).one()
+    if editedAnimal.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant. Please create your own restaurant in order to edit.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedAnimal.name = request.form['name']
@@ -234,9 +239,9 @@ def editAnimal(animal_id):
 
 @app.route('/animal/<int:animal_id>/delete', methods=['GET', 'POST'])
 def deleteAnimal(animal_id):
+    animalForRemoval = session.query(Animal).filter_by(id=animal_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    animalForRemoval = session.query(Animal).filter_by(id=animal_id).one()
     if request.method == 'POST':
         session.delete(animalForRemoval)
         session.commit()
@@ -250,18 +255,27 @@ def deleteAnimal(animal_id):
 @app.route('/animal/<int:animal_id>/toys')
 def showToys(animal_id):
     animal = session.query(Animal).filter_by(id=animal_id).one()
+    creator = getUserInfo(animal.user_id)
     toys = session.query(Toy).filter_by(animal_id=animal_id).all()
-    return render_template('toys.html', toys=toys, animal=animal)
+    if 'username' not in login_session or creator.id != login_session['user_id']:
+        return render_template('publicToys.html', toys=toys, animal=animal, creator=creator)
+    else:
+        return render_template('toys.html', toys=toys, animal=animal, creator=creator)
 
 
 @app.route('/animal/<int:animal_id>/toys/new', methods=['GET', 'POST'])
 def newToy(animal_id):
     if 'username' not in login_session:
         return redirect('/login')
+    animal = session.query(Animal).filter_by(id=animal_id).one()
+    if login_session['user_id'] != animal.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to add menu items to this restaurant. Please create your own restaurant in order to add items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         newToy = Toy(name=request.form['name'],
                      toy_type=request.form['toy_type'],
-                     description=request.form['description'], animal_id=animal_id)
+                     description=request.form['description'],
+                     user_id=animal.user_id,
+                     animal_id=animal_id)
         session.add(newToy)
         session.commit()
         flash('New toy created!')
@@ -275,6 +289,9 @@ def editToy(animal_id, toy_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedToy = session.query(Toy).filter_by(id=toy_id).one()
+    animal = session.query(Animal).filter_by(id=animal_id).one()
+    if login_session['user_id'] != animal.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedToy.name = request.form['name']
@@ -294,7 +311,10 @@ def editToy(animal_id, toy_id):
 def deleteToy(animal_id, toy_id):
     if 'username' not in login_session:
         return redirect('/login')
+    animal = session.query(Animal).filter_by(id=animal_id).one()
     toyForRemoval = session.query(Toy).filter_by(id=toy_id).one()
+    if login_session['user_id'] != animal.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(toyForRemoval)
         session.commit()

@@ -1,0 +1,15 @@
+<div>
+	<div>
+		<a href="{{url_for('showAnimals')}}">
+			<span></span>Show All Animals
+		</a>
+	</div>
+	<div>
+					{%if 'username' not in session %}
+			<a href="{{url_for('showLogin')}}">Click here to log in </a>
+			{% else %}
+			<a href="{{url_for('gdisconnect')}}">Log out </a>
+			{% endif %}
+
+	</div>
+</div>

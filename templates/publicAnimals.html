@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+        <h1>Animals</h1>
+
+        </br>
+        </br>
+
+        {% for animal in animals %}
+
+        Name: {{ animal.name }}
+        </br>
+        Age: {{ animal.age }}
+        </br>
+        Species: {{ animal.species }}
+        </br>
+        </br>
+        <a href="{{ url_for('showToys', animal_id=animal.id) }}"><p>Toys</p></a>
+
+        {% endfor %}
+    </body>
+</html>
