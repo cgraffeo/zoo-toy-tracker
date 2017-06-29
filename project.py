@@ -17,14 +17,14 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-@app.route('/login')
+@app.route('/login/')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
 
-@app.route('/gconnect', methods=['POST'])
+@app.route('/gconnect/', methods=['POST'])
 def gconnect():
     # Validate state token
     if request.args.get('state') != login_session['state']:
@@ -98,7 +98,7 @@ def gconnect():
     login_session['provider'] = 'google'
 
     # see if user exists, if it doesn't make a new one
-    user_id = getUserID(login_session["email"])
+    user_id = getUserID(data["email"])
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
@@ -139,56 +139,56 @@ def getUserID(email):
 
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
-@app.route('/gdisconnect')
+@app.route('/gdisconnect/')
 def gdisconnect():
     # Only disconnect a connected user.
-    credentials = login_session.get('credentials')
-    if credentials is None:
+    access_token = login_session['access_token']
+    if access_token is None:
         response = make_response(
             json.dumps('Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    access_token = credentials.access_token
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
+    # access_token = credentials.access_token
+    url = ('https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token'])
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
-    if result['status'] != '200':
-        del login_session['credentials']
+    if result['status'] == '200':
+        del login_session['access_token']
         del login_session['gplus-id']
         del login_session['username']
         del login_session['email']
         del login_session['picture']
 
         response = make_response(json.dumps('Successfully disconnected'), 200)
-        response_headers['Content-Type'] = 'application/json'
-        return response
+        response.headers['Content-Type'] = 'application/json'
+        return redirect(url_for('stateList'))
     else:
         response = make_response(json.dumps('Failed to revoke token for given user.'), 400)
         response.headers['Content-Type'] = 'application/json'
         return response
 
 
-@app.route('/animals/JSON')
+@app.route('/animals/JSON/')
 def animalsJSON():
     animals = session.query(Animal).all()
     return jsonify(animals=[animal.serialize for animal in animals])
 
 
-@app.route('/animal/<int:animal_id>/toys/JSON')
+@app.route('/animal/<int:animal_id>/toys/JSON/')
 def oneAnimalsToysJSON(animal_id):
     animal = session.query(Animal).filter_by(id=animal_id).one()
     toys = session.query(Toy).filter_by(animal_id=animal_id).all()
     return jsonify(Toys=[toy.serialize for toy in toys])
 
 
-@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/JSON')
+@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/JSON/')
 def oneAnimalsOneToyJSON(animal_id, toy_id):
     oneToy = session.query(Toy).filter_by(id=toy_id).one()
     return jsonify(oneToy=oneToy.serialize)
 
 
 @app.route('/')
-@app.route('/animals')
+@app.route('/animals/')
 def showAnimals():
     animals = session.query(Animal).all()
     if 'username' not in login_session:
@@ -197,7 +197,7 @@ def showAnimals():
         return render_template('animals.html', animals=animals)
 
 
-@app.route('/animal/new', methods=['GET', 'POST'])
+@app.route('/animal/new/', methods=['GET', 'POST'])
 def newAnimal():
     if 'username' not in login_session:
         return redirect('/login')
@@ -214,7 +214,7 @@ def newAnimal():
         return render_template('newAnimal.html')
 
 
-@app.route('/animal/<int:animal_id>/edit', methods=['GET', 'POST'])
+@app.route('/animal/<int:animal_id>/edit/', methods=['GET', 'POST'])
 def editAnimal(animal_id):
     editedAnimal = session.query(Animal).filter_by(id=animal_id).one()
     if 'username' not in login_session:
@@ -236,7 +236,7 @@ def editAnimal(animal_id):
         return render_template('editAnimal.html', animal=editedAnimal)
 
 
-@app.route('/animal/<int:animal_id>/delete', methods=['GET', 'POST'])
+@app.route('/animal/<int:animal_id>/delete/', methods=['GET', 'POST'])
 def deleteAnimal(animal_id):
     animalForRemoval = session.query(Animal).filter_by(id=animal_id).one()
     if 'username' not in login_session:
@@ -250,8 +250,8 @@ def deleteAnimal(animal_id):
         return render_template('deleteAnimal.html', animal=animalForRemoval)
 
 
-@app.route('/animal/<int:animal_id>')
-@app.route('/animal/<int:animal_id>/toys')
+@app.route('/animal/<int:animal_id>/')
+@app.route('/animal/<int:animal_id>/toys/')
 def showToys(animal_id):
     animal = session.query(Animal).filter_by(id=animal_id).one()
     creator = getUserInfo(animal.user_id)
@@ -262,7 +262,7 @@ def showToys(animal_id):
         return render_template('toys.html', toys=toys, animal=animal, creator=creator)
 
 
-@app.route('/animal/<int:animal_id>/toys/new', methods=['GET', 'POST'])
+@app.route('/animal/<int:animal_id>/toys/new/', methods=['GET', 'POST'])
 def newToy(animal_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -283,7 +283,7 @@ def newToy(animal_id):
         return render_template('newToy.html', animal_id=animal_id)
 
 
-@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/edit', methods=['GET', 'POST'])
+@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/edit/', methods=['GET', 'POST'])
 def editToy(animal_id, toy_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -306,7 +306,7 @@ def editToy(animal_id, toy_id):
         return render_template('editToy.html', animal_id=animal_id, toy_id=toy_id, toy=editedToy)
 
 
-@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete', methods=['GET', 'POST'])
+@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete/', methods=['GET', 'POST'])
 def deleteToy(animal_id, toy_id):
     if 'username' not in login_session:
         return redirect('/login')
