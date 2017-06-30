@@ -32,8 +32,7 @@ class Animal(Base):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'species': self.species,
-            'user_id': self.user_id
+            'species': self.species
         }
 
 
@@ -56,8 +55,7 @@ class Toy(Base):
             'name': self.name,
             'animal_id': self.animal_id,
             'toy_type': self.toy_type,
-            'description': self.description,
-            'user_id': self.user_id
+            'description': self.description
         }
 
 

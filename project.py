@@ -5,10 +5,13 @@ from database_setup import Base, Animal, Toy, User
 import random, string, os, json, requests, httplib2
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 
+
+app = Flask(__name__)
+
+
 CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Zoo Toy Tracker"
 
-app = Flask(__name__)
 
 engine = create_engine('sqlite:///animal_toys.db')
 Base.metadata.bind = engine
@@ -17,14 +20,14 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-@app.route('/login/')
+@app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
 
-@app.route('/gconnect/', methods=['POST'])
+@app.route('/gconnect', methods=['POST'])
 def gconnect():
     # Validate state token
     if request.args.get('state') != login_session['state']:
@@ -139,7 +142,7 @@ def getUserID(email):
 
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
-@app.route('/gdisconnect/')
+@app.route('/gdisconnect')
 def gdisconnect():
     # Only disconnect a connected user.
     access_token = login_session['access_token']
@@ -154,14 +157,14 @@ def gdisconnect():
     result = h.request(url, 'GET')[0]
     if result['status'] == '200':
         del login_session['access_token']
-        del login_session['gplus-id']
+        del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
         del login_session['picture']
 
         response = make_response(json.dumps('Successfully disconnected'), 200)
         response.headers['Content-Type'] = 'application/json'
-        return redirect(url_for('stateList'))
+        return redirect(url_for('showAnimals'))
     else:
         response = make_response(json.dumps('Failed to revoke token for given user.'), 400)
         response.headers['Content-Type'] = 'application/json'
