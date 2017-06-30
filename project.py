@@ -101,7 +101,7 @@ def gconnect():
     login_session['provider'] = 'google'
 
     # see if user exists, if it doesn't make a new one
-    user_id = getUserID(data["email"])
+    user_id = getUserID(data['email'])
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
