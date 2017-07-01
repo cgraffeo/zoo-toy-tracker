@@ -34,6 +34,7 @@ def gconnect():
         response = make_response(json.dumps('Invalid state parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
+
     # Obtain authorization code
     code = request.data
 
@@ -54,6 +55,7 @@ def gconnect():
            % access_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
+
     # If there was an error in the access token info, abort.
     if result.get('error') is not None:
         response = make_response(json.dumps(result.get('error')), 500)
@@ -72,10 +74,10 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
-        print "Token's client ID does not match app's."
         response.headers['Content-Type'] = 'application/json'
         return response
 
+    # Get app's google credentials(client_id and client_secret) and google plus id, and check if they're empty
     stored_credentials = login_session.get('credentials')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
@@ -114,7 +116,7 @@ def gconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
-    print "done!"
+    print "DONE WITH GCONNECT!"
     return output
 
 
@@ -126,6 +128,7 @@ def createUser(login_session):
     session.commit()
     user = session.query(User).filter_by(email=login_session['email']).one()
     return user.id
+
 
 
 def getUserInfo(user_id):
@@ -151,7 +154,6 @@ def gdisconnect():
             json.dumps('Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    # access_token = credentials.access_token
     url = ('https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token'])
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
@@ -171,6 +173,7 @@ def gdisconnect():
         return response
 
 
+# JSON API endpoints
 @app.route('/animals/JSON/')
 def animalsJSON():
     animals = session.query(Animal).all()
@@ -223,7 +226,8 @@ def editAnimal(animal_id):
     if 'username' not in login_session:
         return redirect('/login')
     if editedAnimal.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant. Please create your own restaurant in order to edit.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit this animal. Please create your own animal in order to edit or remove.');}</script><body onload='myFunction()''>"
+        return redirect(url_for('showAnimals'))
     if request.method == 'POST':
         if request.form['name']:
             editedAnimal.name = request.form['name']
@@ -244,6 +248,9 @@ def deleteAnimal(animal_id):
     animalForRemoval = session.query(Animal).filter_by(id=animal_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    if animalForRemoval.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to remove this animal. Please create your own animal in order to edit or remove.');}</script><body onload='myFunction()''>"
+        return redirect(url_for('showAnimals'))
     if request.method == 'POST':
         session.delete(animalForRemoval)
         session.commit()
@@ -271,7 +278,8 @@ def newToy(animal_id):
         return redirect('/login')
     animal = session.query(Animal).filter_by(id=animal_id).one()
     if login_session['user_id'] != animal.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to add menu items to this restaurant. Please create your own restaurant in order to add items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to add toys for this animal. Please create your own animal in order to add, edit, or remove toys.');}</script><body onload='myFunction()''>"
+        return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         newToy = Toy(name=request.form['name'],
                      toy_type=request.form['toy_type'],
@@ -293,7 +301,8 @@ def editToy(animal_id, toy_id):
     editedToy = session.query(Toy).filter_by(id=toy_id).one()
     animal = session.query(Animal).filter_by(id=animal_id).one()
     if login_session['user_id'] != animal.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit toys for this animal. Please create your own animal in order to add, edit, or remove toys.');}</script><body onload='myFunction()''>"
+        return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         if request.form['name']:
             editedToy.name = request.form['name']
@@ -316,7 +325,8 @@ def deleteToy(animal_id, toy_id):
     animal = session.query(Animal).filter_by(id=animal_id).one()
     toyForRemoval = session.query(Toy).filter_by(id=toy_id).one()
     if login_session['user_id'] != animal.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to remove toys for this animal. Please create your own animal in order to add, edit, or remove toys.');}</script><body onload='myFunction()''>"
+        return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         session.delete(toyForRemoval)
         session.commit()
