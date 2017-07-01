@@ -19,7 +19,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-
+@app.route('/')
 @app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
@@ -200,7 +200,6 @@ def oneAnimalsOneToyJSON(animal_id, toy_id):
     return jsonify(oneToy=oneToy.serialize)
 
 
-@app.route('/')
 @app.route('/animals/')
 def showAnimals():
     animals = session.query(Animal).all()
