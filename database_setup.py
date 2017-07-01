@@ -19,11 +19,11 @@ class User(Base):
 class Animal(Base):
     __tablename__ = 'animal'
 
-    id = Column(Integer, primary_key = True)
-    name = Column(String(30), nullable = False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(30), nullable=False)
     age = Column(Integer)
-    species = Column(String(50), nullable = False)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    species = Column(String(50), nullable=False)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship(User)
 
     @property
@@ -39,13 +39,13 @@ class Animal(Base):
 class Toy(Base):
     __tablename__ = 'toy'
 
-    id = Column(Integer, primary_key = True)
-    name = Column(String(80), nullable = False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(80), nullable=False)
     animal_id = Column(Integer, ForeignKey('animal.id'))
     toy_type = Column(String(10))
     description = Column(String(160))
     animal = relationship(Animal)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship(User)
 
     @property
