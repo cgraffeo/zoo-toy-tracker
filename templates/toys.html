@@ -1,47 +1,44 @@
-<html>
-    <head>
-        <link href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
-        <h1>{{ animal.name }}</h1>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<h1>{{ animal.name }}</h1>
 
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
 
-        <ul>
-        {% for message in messages %}
-            <li><strong>{{ message }}</strong></li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+<ul>
+{% for message in messages %}
+    <li><strong>{{ message }}</strong></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 
-        </br>
-        <a href="{{ url_for('showAnimals') }}">Show Animals</a>
-        </br>
-        </br>
-        <a href="{{ url_for('newToy', animal_id=animal.id) }}">Add toy</a>
-        </br>
-        </br>
+</br>
+<a href="{{ url_for('showAnimals') }}">Show Animals</a>
+</br>
+</br>
+<a href="{{ url_for('newToy', animal_id=animal.id) }}">Add toy</a>
+</br>
+</br>
 
-        {% for toy in toys %}
+{% for toy in toys %}
 
-        Toy name: {{ toy.name }}
+Toy name: {{ toy.name }}
 
-        </br>
+</br>
 
-        Type: {{ toy.toy_type }}
+Type: {{ toy.toy_type }}
 
-        </br>
+</br>
 
-        Description: {{ toy.description }}
+Description: {{ toy.description }}
 
-        </br>
-        <a href="{{ url_for('editToy', animal_id=animal.id, toy_id=toy.id) }}">Edit</a>
-        </br>
-        <a href="{{ url_for('deleteToy', animal_id=animal.id, toy_id=toy.id) }}">Delete</a>
-        </br>
-        </br>
-        {% endfor %}
-    </body>
-</html>
+</br>
+<a href="{{ url_for('editToy', animal_id=animal.id, toy_id=toy.id) }}">Edit</a>
+</br>
+<a href="{{ url_for('deleteToy', animal_id=animal.id, toy_id=toy.id) }}">Delete</a>
+</br>
+</br>
+{% endfor %}
+{% endblock %}

@@ -1,27 +1,22 @@
-<html>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<h1>New Animal</h1>
 
-    <head>
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
+<form action="#" method="post">
 
-        <h1>New Animal</h1>
+	<p>Name:</p>
+	<input type="text" size="30" name="name">
+    </br>
+    <p>Age:</p>
+	<input type="number" size="30" name="age">
+    </br>
+    <p>Species:</p>
+	<input type="text" size="30" name="species">
+    </br>
+    </br>
+<input type='submit' value='Create'>
+<a href="{{ url_for('showAnimals') }}">Cancel</a>
 
-        <form action="#" method="post">
-
-        	<p>Name:</p>
-        	<input type="text" size="30" name="name">
-            </br>
-            <p>Age:</p>
-        	<input type="number" size="30" name="age">
-            </br>
-            <p>Species:</p>
-        	<input type="text" size="30" name="species">
-            </br>
-            </br>
-        <input type='submit' value='Create'>
-
-        </form>
-
-    </body>
-</html>
+</form>
+{% endblock %}

@@ -4,7 +4,7 @@
 	<div>
 		<h1>Toy Tracker</h1>
 					{% if 'username' not in session %}
-			<a href="{{url_for('showLogin')}}">Click here to log in </a>
+			<a href="{{url_for('showLogin')}}">Log in </a>
 			{% else %}
 			<a href="{{url_for('gdisconnect')}}">Log out </a>
 			{% endif %}
