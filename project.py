@@ -345,7 +345,7 @@ def deleteToy(animal_id, toy_id):
         flash('Toy successfully deleted!')
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
-        return render_template('deleteToy.html', toy=toyForRemoval)
+        return render_template('deleteToy.html', animal_id=animal_id, toy_id=toy_id, toy=toyForRemoval)
 
 
 if __name__ == '__main__':
