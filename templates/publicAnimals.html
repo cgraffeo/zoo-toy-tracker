@@ -1,25 +1,21 @@
-<html>
-    <head>
-        <link href="{{ url_for('static', filename='style.css') }}">
-    </head>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<h1>Animals</h1>
 
-    <body>
-        <h1>Animals</h1>
+</br>
+</br>
 
-        </br>
-        </br>
+{% for animal in animals %}
 
-        {% for animal in animals %}
+Name: {{ animal.name }}
+</br>
+Age: {{ animal.age }}
+</br>
+Species: {{ animal.species }}
+</br>
+</br>
+<a href="{{ url_for('showToys', animal_id=animal.id) }}"><p>Toys</p></a>
 
-        Name: {{ animal.name }}
-        </br>
-        Age: {{ animal.age }}
-        </br>
-        Species: {{ animal.species }}
-        </br>
-        </br>
-        <a href="{{ url_for('showToys', animal_id=animal.id) }}"><p>Toys</p></a>
-
-        {% endfor %}
-    </body>
-</html>
+{% endfor %}
+{% endblock %}

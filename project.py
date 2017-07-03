@@ -104,12 +104,9 @@ def gconnect():
 
     # see if user exists, if it doesn't make a new one
     user_id = getUserID(data['email'])
-    print "The user id is %s" % user_id
     if not user_id:
-        print "Getting user id"
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
-    print user_id
 
     output = ''
     output += '<h1>Welcome, '
@@ -118,7 +115,7 @@ def gconnect():
     output += '<img src="'
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
-    flash("you are now logged in as %s" % login_session['username'])
+    flash("You are now logged in as %s" % login_session['username'])
     print "DONE!"
     return output
 

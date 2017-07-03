@@ -1,64 +1,58 @@
-<html>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<form action="{{ url_for('editToy', animal_id=animal_id, toy_id=toy_id) }}" method="post">
 
-    <head>
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
+    <h1>Edit {{ toy.name }}</h1>
+    </br>
+    <img src="{{ toy.photo }}" width="100" height="100">
+    </br>
+	<p>Name:</p>
+	<input type="text" size="30" name="name" placeholder="{{ toy.name }}">
+    </br>
+    <p>Type:</p>
+	<select name="toy_type">
 
-        <form action="{{ url_for('editToy', animal_id=animal_id, toy_id=toy_id) }}" method="post">
+        {% if toy.toy_type == 'Sensory' %}
+        <option value="Sensory" selected>Sensory</option>
+        {% else %}
+        <option value="Sensory">Sensory</option>
+        {% endif %}
 
-            <h1>Edit {{ toy.name }}</h1>
-            </br>
-            <img src="{{ toy.photo }}" width="100" height="100">
-            </br>
-        	<p>Name:</p>
-        	<input type="text" size="30" name="name" placeholder="{{ toy.name }}">
-            </br>
-            <p>Type:</p>
-        	<select name="toy_type">
+        {% if toy.toy_type == 'Foods and Feeding' %}
+        <option value="Foods and Feeding" selected>Foods and Feeding</option>
+        {% else %}
+        <option value="Foods and Feeding">Foods and Feeding</option>
+        {% endif %}
 
-                {% if toy.toy_type == 'Sensory' %}
-                <option value="Sensory" selected>Sensory</option>
-                {% else %}
-                <option value="Sensory">Sensory</option>
-                {% endif %}
+        {% if toy.toy_type == 'Manipulative' %}
+        <option value="Manipulative" selected>Manipulative</option>
+        {% else %}
+        <option value="Manipulative">Manipulative</option>
+        {% endif %}
 
-                {% if toy.toy_type == 'Foods and Feeding' %}
-                <option value="Foods and Feeding" selected>Foods and Feeding</option>
-                {% else %}
-                <option value="Foods and Feeding">Foods and Feeding</option>
-                {% endif %}
+        {% if toy.toy_type == 'Environment' %}
+        <option value="Environment" selected>Environment</option>
+        {% else %}
+        <option value="Environment">Environment</option>
+        {% endif %}
 
-                {% if toy.toy_type == 'Manipulative' %}
-                <option value="Manipulative" selected>Manipulative</option>
-                {% else %}
-                <option value="Manipulative">Manipulative</option>
-                {% endif %}
+        {% if toy.toy_type =='Behavioral/Social' %}
+        <option value="Behavioral/Social" selected>Behavioral/Social</option>
+        {% else %}
+        <option value="Behavioral/Social">Behavioral/Social</option>
+        {% endif %}
 
-                {% if toy.toy_type == 'Environment' %}
-                <option value="Environment" selected>Environment</option>
-                {% else %}
-                <option value="Environment">Environment</option>
-                {% endif %}
+    </select>
+    </br>
+    <p>Description:</p>
+	<textarea name="description" placeholder="{{ toy.description }}"></textarea>
+    </br>
+    <p>Photo URL(image address):</p>
+	<input type="text" size="30" name="photo" placeholder="{{ toy.photo }}">
+    </br>
+    </br>
+    <input type="submit" value="Save changes">
 
-                {% if toy.toy_type =='Behavioral/Social' %}
-                <option value="Behavioral/Social" selected>Behavioral/Social</option>
-                {% else %}
-                <option value="Behavioral/Social">Behavioral/Social</option>
-                {% endif %}
-
-            </select>
-            </br>
-            <p>Description:</p>
-        	<textarea name="description" placeholder="{{ toy.description }}"></textarea>
-            </br>
-            <p>Photo URL(image address):</p>
-        	<input type="text" size="30" name="photo" placeholder="{{ toy.photo }}">
-            </br>
-            </br>
-            <input type="submit" value="Save changes">
-
-        </form>
-
-    </body>
-</html>
+</form>
+{% endblock %}

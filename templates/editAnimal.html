@@ -1,33 +1,27 @@
-<html>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<form action="{{ url_for('editAnimal', animal_id=animal.id) }}" method="post">
 
-    <head>
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
+    <h1>Edit {{ animal.name }}</h1>
 
-        <form action="{{ url_for('editAnimal', animal_id=animal.id) }}" method="post">
+    <img src="{{ animal.photo }}" width="100" height="100">
+    </br>
+	<p>Name:</p>
+	<input type="text" size="30" name="name" placeholder="{{ animal.name }}">
+    </br>
+    <p>Age:</p>
+	<input type="number" size="30" name="age" placeholder="{{ animal.age }}">
+    </br>
+    <p>Species:</p>
+	<input type="text" size="30" name="species" placeholder="{{ animal.species }}">
+    </br>
+    <p>Photo URL(image address):</p>
+	<input type="text" size="30" name="photo" placeholder="{{ animal.photo }}">
+    </br>
+    </br>
+    <input type='submit' value='Save changes'>
+    <a href="{{ url_for('showAnimals') }}">Cancel</a>
 
-            <h1>Edit {{ animal.name }}</h1>
-
-            <img src="{{ animal.photo }}" width="100" height="100">
-            </br>
-        	<p>Name:</p>
-        	<input type="text" size="30" name="name" placeholder="{{ animal.name }}">
-            </br>
-            <p>Age:</p>
-        	<input type="number" size="30" name="age" placeholder="{{ animal.age }}">
-            </br>
-            <p>Species:</p>
-        	<input type="text" size="30" name="species" placeholder="{{ animal.species }}">
-            </br>
-            <p>Photo URL(image address):</p>
-        	<input type="text" size="30" name="photo" placeholder="{{ animal.photo }}">
-            </br>
-            </br>
-        <input type='submit' value='Save changes'>
-        <a href="{{ url_for('showAnimals') }}">Cancel</a>
-
-        </form>
-
-    </body>
-</html>
+</form>
+{% endblock %}
