@@ -217,6 +217,7 @@ def newAnimal():
         newAnimal = Animal(name=request.form['name'],
                            age=request.form['age'],
                            species=request.form['species'],
+                           photo=request.form['photo'],
                            user_id=login_session['user_id'])
         session.add(newAnimal)
         session.commit()
