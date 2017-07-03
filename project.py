@@ -242,6 +242,8 @@ def editAnimal(animal_id):
             editedAnimal.age = request.form['age']
         if request.form['species']:
             editedAnimal.species = request.form['species']
+        if request.form['photo']:
+            editedAnimal.photo = request.form['photo']
         session.add(editedAnimal)
         session.commit()
         flash('Animal successfully edited!')
