@@ -221,7 +221,7 @@ def newAnimal():
                            user_id=login_session['user_id'])
         session.add(newAnimal)
         session.commit()
-        flash('New animal created!')
+        flash('{} successfully created!'.format(newAnimal.name))
         return redirect(url_for('showAnimals'))
     else:
         return render_template('newAnimal.html')
@@ -246,7 +246,7 @@ def editAnimal(animal_id):
             editedAnimal.photo = request.form['photo']
         session.add(editedAnimal)
         session.commit()
-        flash('Animal successfully edited!')
+        flash('{} successfully edited!'.format(editedAnimal.name))
         return redirect(url_for('showAnimals'))
     else:
         return render_template('editAnimal.html', animal=editedAnimal)
@@ -263,7 +263,7 @@ def deleteAnimal(animal_id):
     if request.method == 'POST':
         session.delete(animalForRemoval)
         session.commit()
-        flash('Animal successfully deleted!')
+        flash('{} successfully deleted!'.format(animalForRemoval.name))
         return redirect(url_for('showAnimals', animal_id=animal_id))
     else:
         return render_template('deleteAnimal.html', animal=animalForRemoval)
@@ -298,7 +298,7 @@ def newToy(animal_id):
                      animal_id=animal_id)
         session.add(newToy)
         session.commit()
-        flash('New toy created!')
+        flash('{} successfully created!'.format(newToy.name))
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('newToy.html', animal_id=animal_id)
@@ -324,7 +324,7 @@ def editToy(animal_id, toy_id):
             editedToy.photo = request.form['photo']
         session.add(editedToy)
         session.commit()
-        flash('Toy successfully edited!')
+        flash('{} successfully edited!'.format(editedToy.name))
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('editToy.html', animal_id=animal_id, toy_id=toy_id, toy=editedToy)
@@ -342,7 +342,7 @@ def deleteToy(animal_id, toy_id):
     if request.method == 'POST':
         session.delete(toyForRemoval)
         session.commit()
-        flash('Toy successfully deleted!')
+        flash('{} successfully deleted!'.format(toyForRemoval.name))
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('deleteToy.html', animal_id=animal_id, toy_id=toy_id, toy=toyForRemoval)
