@@ -293,6 +293,7 @@ def newToy(animal_id):
         newToy = Toy(name=request.form['name'],
                      toy_type=request.form['toy_type'],
                      description=request.form['description'],
+                     photo=request.form['photo'],
                      user_id=animal.user_id,
                      animal_id=animal_id)
         session.add(newToy)
