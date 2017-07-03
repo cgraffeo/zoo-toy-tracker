@@ -5,10 +5,12 @@
     </head>
     <body>
 
-        <h1>Edit Toy</h1>
+        <form action="{{ url_for('editToy', animal_id=animal_id, toy_id=toy_id) }}" method="post">
 
-        <form action="#" method="post">
-
+            <h1>Edit {{ toy.name }}</h1>
+            </br>
+            <img src="{{ toy.photo }}" width="100" height="100">
+            </br>
         	<p>Name:</p>
         	<input type="text" size="30" name="name" placeholder="{{ toy.name }}">
             </br>
@@ -49,6 +51,9 @@
             </br>
             <p>Description:</p>
         	<textarea name="description" placeholder="{{ toy.description }}"></textarea>
+            </br>
+            <p>Photo URL(image address):</p>
+        	<input type="text" size="30" name="photo" placeholder="{{ toy.photo }}">
             </br>
             </br>
             <input type="submit" value="Save changes">

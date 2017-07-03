@@ -320,6 +320,8 @@ def editToy(animal_id, toy_id):
             editedToy.toy_type = request.form['toy_type']
         if request.form['description']:
             editedToy.description = request.form['description']
+        if request.form['photo']:
+            editedToy.photo = request.form['photo']
         session.add(editedToy)
         session.commit()
         flash('Toy successfully edited!')
