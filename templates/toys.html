@@ -26,16 +26,13 @@
 
         {% for toy in toys %}
 
+        <img src="{{ toy.photo }}" width="100" height="100">
+        </br>
         Toy name: {{ toy.name }}
-
         </br>
-
         Type: {{ toy.toy_type }}
-
         </br>
-
         Description: {{ toy.description }}
-
         </br>
         <a href="{{ url_for('editToy', animal_id=animal.id, toy_id=toy.id) }}">Edit</a>
         </br>

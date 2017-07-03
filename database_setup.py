@@ -23,6 +23,7 @@ class Animal(Base):
     name = Column(String(30), nullable=False)
     age = Column(Integer)
     species = Column(String(50), nullable=False)
+    photo = Column(String(250))
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship(User)
 
@@ -32,7 +33,8 @@ class Animal(Base):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'species': self.species
+            'species': self.species,
+            'photo': self.photo
         }
 
 
@@ -43,7 +45,8 @@ class Toy(Base):
     name = Column(String(80), nullable=False)
     animal_id = Column(Integer, ForeignKey('animal.id'))
     toy_type = Column(String(10))
-    description = Column(String(160))
+    description = Column(String(250))
+    photo = Column(String(250))
     animal = relationship(Animal)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship(User)
@@ -55,7 +58,8 @@ class Toy(Base):
             'name': self.name,
             'animal_id': self.animal_id,
             'toy_type': self.toy_type,
-            'description': self.description
+            'description': self.description,
+            'photo': self.photo
         }
 
 
