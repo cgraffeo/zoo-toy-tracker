@@ -28,7 +28,6 @@ giraffe1_toy3 = Toy(name='Pinecones', toy_type='Manipulative', description='Pine
 
 session.add(giraffe1_toy3)
 session.commit()
-
 # End toys for Riley
 
 # Toys for Tino the gorilla
@@ -42,7 +41,7 @@ gorilla1_toy1 = Toy(name='TV/Videos', toy_type='Sensory', description='Pretty ob
 session.add(gorilla1_toy1)
 session.commit()
 
-gorilla1_toy2 = Toy(name='Swings', toy_type='Environment', description='Large swings for entertainment. Watch for Tino to make sure he does not wrap it around himself.', photo='https://2ecffd01e1ab3e9383f0-07db7b9624bbdf022e3b5395236d5cf8.ssl.cf4.rackcdn.com/Product-800x800/98745f7b-b53d-4951-b632-2c63e70b8489.jpg', animal=gorilla1, user_id=1)
+gorilla1_toy2 = Toy(name='Swings', toy_type='Environmental', description='Large swings for entertainment. Watch for Tino to make sure he does not wrap it around himself.', photo='https://2ecffd01e1ab3e9383f0-07db7b9624bbdf022e3b5395236d5cf8.ssl.cf4.rackcdn.com/Product-800x800/98745f7b-b53d-4951-b632-2c63e70b8489.jpg', animal=gorilla1, user_id=1)
 
 session.add(gorilla1_toy2)
 session.commit()
@@ -51,3 +50,52 @@ gorilla1_toy3 = Toy(name='Tug-o-war', toy_type='Behavioral/Social', description=
 
 session.add(gorilla1_toy3)
 session.commit()
+# End toys for Tino
+
+# Toys for Zuri the elephant
+elephant1 = Animal(name='Zuri', age=10, species='Elephant', photo='https://static1.squarespace.com/static/5304f39be4b0c1e749b456be/t/58cc06d96a49637cb9ed84a6/1489766903764/', user_id=1)
+
+session.add(elephant1)
+session.commit()
+
+elephant1_toy_1 = Toy(name='Bubbles', toy_type='Sensory', description='The keeper can blow NON-TOXIC bubbles into the elephant exhibit. The elephants like to chase them around.', photo='https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iz9tFMUcP6rI/v1/1200x-1.jpg', animal=elephant1, user_id=1)
+
+session.add(elephant1_toy_1)
+session.commit()
+# End toys for Zuri
+
+# Toys for Kazek the tiger
+tiger1 = Animal(name='Kazek', age=13, species='Tiger', photo='http://www.wildaid.org/sites/default/files/photos/iStock_000008484745Large%20%20tiger%20-%20bengal.jpg', user_id=1)
+
+session.add(tiger1)
+session.commit()
+
+tiger1_toy1 = Toy(name='Disco Ball', toy_type='Sensory', description='The little lights off this disco ball are like using a laser on a house cat; The tigers love to chase them around.', animal=tiger1, user_id=1)
+
+session.add(tiger1_toy1)
+session.commit()
+# End toys for Kazek
+
+# Toys for Kwan the crocodile
+crocodile1 = Animal(name='Kwan', age=6, species='Crocodile', photo='https://s-media-cache-ak0.pinimg.com/736x/8d/92/2e/8d922e642ce725024ec741bff8bc7175--darwin-australia-saltwater-crocodile.jpg', user_id=1)
+
+session.add(crocodile1)
+session.commit()
+
+crocodile1_toy1 = Toy(name='Branches', toy_type='Environmental', description='The crocs love to hide in the branches. Maybe they like the privacy?', animal=crocodile1, user_id=1)
+
+session.add(crocodile1_toy1)
+session.commit()
+# End toys for Kwan
+
+# Toys for Sam the eagle
+eagle1 = Animal(name='Sam', age=4, species='Bald Eagle', photo='https://identify.whatbird.com/img/4/48397/image.aspx?x=322', user_id=1)
+
+session.add(eagle1)
+session.commit()
+
+eagle1_toy1 = Toy(name='Straw Pile', toy_type='Environmental', description='The eagles love to carry this into their favorite corner of the exhibit. Seems like they try to build a nest with it.', animal=eagle1, user_id=1)
+
+session.add(eagle1_toy1)
+session.commit()
+# End toys for Sam

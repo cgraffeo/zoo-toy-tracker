@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="card-deck">
+    <div class="card-box">
         {% for animal in animals %}
         <a class="card-link" href="{{ url_for('showToys', animal_id=animal.id) }}">
             <div class="card text-center">
@@ -39,8 +39,8 @@
                         </br>
                         Species: {{ animal.species }}
                     </p>
-                    <a class="btn btn-link btn-sm" href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
-                    <a class="btn btn-link btn-sm" href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
+                    <a class="btn btn-sm" href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
+                    <a class="btn btn-sm" href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
                 </div>
             </div>
         </a>
