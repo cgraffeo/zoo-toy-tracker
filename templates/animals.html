@@ -4,55 +4,48 @@
     {% include "header.html" %}
     {% include "carousel.html" %}
 
-    <div class="row mx-0 my-3">
-        <div class="col-md-6">
+    <div class="row mx-0 my-3 page-title">
+        <div class="col-md-2">
             <h2 class="header">Animals</h2>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
+            <div>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+
+                <ul class="message-list">
+                {% for message in messages %}
+                    <li><strong>Awesome! </strong>{{ message }}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        <div class="col-md-2">
             <a href="{{ url_for('newAnimal') }}" class="btn btn-primary float-right add-btn">Add animal</a>
         </div>
     </div>
 
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-
-    <ul>
-    {% for message in messages %}
-        <li><strong>{{ message }}</strong></li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-
-    {% for animal in animals %}
-
-    <div class="card text-center" style="width: 15rem;">
-        <img class="card-img-top" src="{{ animal.photo }}" alt="Card image cap">
-        <div class="card-block">
-            <h4 class="card-title">{{ animal.name }} {{ animal.age }}</h4>
-            <p class="card-text">{{ animal.species }}</p>
-            <div class="btn-group" role="group">
-                <a class="btn btn-primary btn-sm" href="{{ url_for('showToys', animal_id=animal.id) }}">Toys</a>
-                <a class="btn btn-success btn-sm" href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
-                <a class="btn btn-danger btn-sm" href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
+    <div class="card-deck">
+        {% for animal in animals %}
+        <a class="card-link" href="{{ url_for('showToys', animal_id=animal.id) }}">
+            <div class="card text-center">
+                <img class="card-img-top" src="{{ animal.photo }}" alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">{{ animal.name }}</h4>
+                    <p class="card-text">
+                        Age: {{ animal.age }}
+                        </br>
+                        Species: {{ animal.species }}
+                    </p>
+                    <a class="btn btn-link btn-sm" href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
+                    <a class="btn btn-link btn-sm" href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
+                </div>
             </div>
-        </div>
+        </a>
+        {% endfor %}
     </div>
 
-    <!-- <img src="{{ animal.photo }}" class="img-fluid"> -->
-
-    <!-- Name: {{ animal.name }}
-
-    Age: {{ animal.age }}
-
-    Species: {{ animal.species }}
-
-    <a href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
-
-    <a href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
-
-    <a href="{{ url_for('showToys', animal_id=animal.id) }}"><p>Toys</p></a> -->
-
-    {% endfor %}
 </div>
 {% endblock %}
