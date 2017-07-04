@@ -4,9 +4,9 @@
     {% include "header.html" %}
     {% include "carousel.html" %}
 
-    <div class="row mx-0 my-3 page-title">
+    <div class="row page-title">
         <div class="col-md-2">
-            <h2 class="header">Animals</h2>
+            <h2>Animals</h2>
         </div>
         <div class="col-md-8">
             <div>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <a href="{{ url_for('newAnimal') }}" class="btn btn-primary float-right add-btn">Add animal</a>
+            <a class="btn btn-primary float-right add-btn" href="{{ url_for('newAnimal') }}">Add animal</a>
         </div>
     </div>
 
@@ -39,8 +39,10 @@
                         </br>
                         Species: {{ animal.species }}
                     </p>
-                    <a class="btn btn-sm" href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
-                    <a class="btn btn-sm" href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
+                </div>
+                <div class="card-footer">
+                    <a class="card-link edit-btn" href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
+                    <a class="card-link del-btn" href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
                 </div>
             </div>
         </a>

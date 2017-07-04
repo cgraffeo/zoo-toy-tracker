@@ -17,10 +17,17 @@
 
 .page-title {
     height: 40px;
+    margin: 10px 0;
 }
 
 .message-list {
+    text-align: center;
     list-style-type: none;
+    padding-top: 10px;
+}
+
+.message-list li {
+    color: #3c763d;
 }
 
 .add-btn {
@@ -47,4 +54,16 @@
 .card img {
     height: 150px;
     width: 100%;
+}
+
+.card-text {
+    font-size: 14px;
+}
+
+.edit-btn {
+    color: #0275d8;
+}
+
+.del-btn {
+    color: #d9534f;
 }
