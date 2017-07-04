@@ -1,43 +1,58 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-{% include "carousel.html" %}
+<div class="container">
+    {% include "header.html" %}
+    {% include "carousel.html" %}
 
-<div class="row mx-0 my-2">
-    <div class="col-md-6">
-        <h2 class="header">Animals</h2>
+    <div class="row mx-0 my-3">
+        <div class="col-md-6">
+            <h2 class="header">Animals</h2>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url_for('newAnimal') }}" class="btn btn-primary float-right add-btn">Add animal</a>
+        </div>
     </div>
-    <div class="col-md-6">
-        <a href="{{ url_for('newAnimal') }}" class="btn btn-primary float-right add-btn">Add animal</a>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+    <ul>
+    {% for message in messages %}
+        <li><strong>{{ message }}</strong></li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    {% for animal in animals %}
+
+    <div class="card text-center" style="width: 15rem;">
+        <img class="card-img-top" src="{{ animal.photo }}" alt="Card image cap">
+        <div class="card-block">
+            <h4 class="card-title">{{ animal.name }} {{ animal.age }}</h4>
+            <p class="card-text">{{ animal.species }}</p>
+            <div class="btn-group" role="group">
+                <a class="btn btn-primary btn-sm" href="{{ url_for('showToys', animal_id=animal.id) }}">Toys</a>
+                <a class="btn btn-success btn-sm" href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
+                <a class="btn btn-danger btn-sm" href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
+            </div>
+        </div>
     </div>
+
+    <!-- <img src="{{ animal.photo }}" class="img-fluid"> -->
+
+    <!-- Name: {{ animal.name }}
+
+    Age: {{ animal.age }}
+
+    Species: {{ animal.species }}
+
+    <a href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
+
+    <a href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
+
+    <a href="{{ url_for('showToys', animal_id=animal.id) }}"><p>Toys</p></a> -->
+
+    {% endfor %}
 </div>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-
-<ul>
-{% for message in messages %}
-    <li><strong>{{ message }}</strong></li>
-{% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-
-{% for animal in animals %}
-
-<img src="{{ animal.photo }}" width="100" height="100">
-
-Name: {{ animal.name }}
-
-Age: {{ animal.age }}
-
-Species: {{ animal.species }}
-
-<a href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
-
-<a href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
-
-<a href="{{ url_for('showToys', animal_id=animal.id) }}"><p>Toys</p></a>
-
-{% endfor %}
 {% endblock %}
