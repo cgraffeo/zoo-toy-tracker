@@ -4,23 +4,19 @@ import os
 import json
 import requests
 import httplib2
-
 from flask import Flask, render_template, request, redirect, jsonify, url_for,
 flash, make_response, session as login_session
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
-
 from database_setup import Base, Animal, Toy, User
 
 
 app = Flask(__name__)
 
 
-CLIENT_ID = json.loads(open('client_secrets.json',
-                            'r').read())['web']['client_id']
+CLIENT_ID = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Zoo Toy Tracker"
 
 
@@ -34,8 +30,8 @@ session = DBSession()
 @app.route('/')
 @app.route('/login')
 def showLogin():
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for
-                    x in xrange(32))
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
@@ -95,8 +91,8 @@ def gconnect():
     stored_credentials = login_session.get('credentials')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('''Current user is already
-        connected.'''), 200)
+        response = make_response(
+            json.dumps('Current user is already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -170,8 +166,8 @@ def gdisconnect():
             json.dumps('Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    url = ('https://accounts.google.com/o/oauth2/revoke?token=%s' %
-            login_session['access_token'])
+    url = ('https://accounts.google.com/o/oauth2/revoke?token=%s'
+            % login_session['access_token'])
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     if result['status'] == '200':
@@ -185,8 +181,8 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return redirect(url_for('showAnimals'))
     else:
-        response = make_response(json.dumps('''Failed to revoke token for
-        given user.'''), 400)
+        response = make_response(
+            json.dumps('Failed to revoke token for given user.'), 400)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -232,7 +228,7 @@ def newAnimal():
                            user_id=login_session['user_id'])
         session.add(newAnimal)
         session.commit()
-        flash('{} successfully created!'.format(newAnimal.name))
+        flash('%s successfully created!' % newAnimal.name)
         return redirect(url_for('showAnimals'))
     else:
         return render_template('newAnimal.html')
@@ -259,7 +255,7 @@ def editAnimal(animal_id):
             editedAnimal.photo = request.form['photo']
         session.add(editedAnimal)
         session.commit()
-        flash('{} successfully edited!'.format(editedAnimal.name))
+        flash('%s successfully edited!' % editedAnimal.name)
         return redirect(url_for('showAnimals'))
     else:
         return render_template('editAnimal.html', animal=editedAnimal)
@@ -278,7 +274,7 @@ def deleteAnimal(animal_id):
     if request.method == 'POST':
         session.delete(animalForRemoval)
         session.commit()
-        flash('{} successfully deleted!'.format(animalForRemoval.name))
+        flash('%s successfully deleted!' % animalForRemoval.name)
         return redirect(url_for('showAnimals', animal_id=animal_id))
     else:
         return render_template('deleteAnimal.html', animal=animalForRemoval)
@@ -290,8 +286,8 @@ def showToys(animal_id):
     animal = session.query(Animal).filter_by(id=animal_id).one()
     creator = getUserInfo(animal.user_id)
     toys = session.query(Toy).filter_by(animal_id=animal_id).all()
-    if 'username' not in login_session or creator.id !=
-    login_session['user_id']:
+    if 'username' not in login_session or creator.id
+    != login_session['user_id']:
         return render_template('publicToys.html',
                                 toys=toys,
                                 animal=animal,
@@ -322,7 +318,7 @@ def newToy(animal_id):
                      animal_id=animal_id)
         session.add(newToy)
         session.commit()
-        flash('{} successfully created!'.format(newToy.name))
+        flash('%s successfully created!' % newToy.name)
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('newToy.html', animal_id=animal_id)
@@ -352,7 +348,7 @@ def editToy(animal_id, toy_id):
             editedToy.photo = request.form['photo']
         session.add(editedToy)
         session.commit()
-        flash('{} successfully edited!'.format(editedToy.name))
+        flash('%s successfully edited!' % editedToy.name)
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('editToy.html',
@@ -362,7 +358,7 @@ def editToy(animal_id, toy_id):
 
 
 @app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete/',
-    methods=['GET', 'POST'])
+            methods=['GET', 'POST'])
 def deleteToy(animal_id, toy_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -377,7 +373,7 @@ def deleteToy(animal_id, toy_id):
     if request.method == 'POST':
         session.delete(toyForRemoval)
         session.commit()
-        flash('{} successfully deleted!'.format(toyForRemoval.name))
+        flash('%s successfully deleted!' % toyForRemoval.name)
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
         return render_template('deleteToy.html',
