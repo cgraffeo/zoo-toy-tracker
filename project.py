@@ -4,8 +4,8 @@ import os
 import json
 import requests
 import httplib2
-from flask import Flask, render_template, request, redirect, jsonify, url_for,
-flash, make_response, session as login_session
+from flask import Flask, render_template, request, redirect, jsonify, url_for
+from flask import flash, make_response, session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
@@ -286,8 +286,7 @@ def showToys(animal_id):
     animal = session.query(Animal).filter_by(id=animal_id).one()
     creator = getUserInfo(animal.user_id)
     toys = session.query(Toy).filter_by(animal_id=animal_id).all()
-    if 'username' not in login_session or creator.id
-    != login_session['user_id']:
+    if 'username' not in login_session or creator.id != login_session['user_id']:
         return render_template('publicToys.html',
                                 toys=toys,
                                 animal=animal,

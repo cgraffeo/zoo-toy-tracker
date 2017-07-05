@@ -27,6 +27,12 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12 text-muted instructions">
+            Click on an animal's card to see its toys
+        </div>
+    </div>
+
     <div class="card-box">
         {% for animal in animals %}
         <a class="toys-link" href="{{url_for('showToys', animal_id=animal.id)}}">

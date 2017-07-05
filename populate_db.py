@@ -29,7 +29,7 @@ session.commit()
 giraffe1_toy2 = Toy(name='Barrel Feeder', toy_type='Foods and Feeding',
     description='''
     Just like it sounds. Food placed in a barrel with enough openings for
-    access, but cleverly placed for a stimulating challenge.''',
+    access.''',
     photo='''
     https://images-na.ssl-images-amazon.com/images/I/41Qj8Bh185L._SY355_.jpg''',
     animal=giraffe1, user_id=1)

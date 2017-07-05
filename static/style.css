@@ -31,6 +31,11 @@
     margin-top: 2px;
 }
 
+.instructions {
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
 .card-box {
     display: flex;
     justify-content: center;
@@ -95,4 +100,12 @@ form img {
 
 .del-group .btn {
     margin: 0 5px;
+}
+
+.back-btn {
+    margin-left: 15px;
+}
+
+.back-btn:hover {
+    text-decoration: none;
 }
