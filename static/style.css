@@ -46,8 +46,11 @@
     margin: 10px;
 }
 
-.card-link {
+.toys-link {
     color: #000;
+}
+
+.toys-link:hover {
     text-decoration: none;
 }
 
@@ -66,4 +69,14 @@
 
 .del-btn {
     color: #d9534f;
+}
+
+form {
+    width: 400px;
+    margin: 20px auto;
+}
+
+form h2 {
+    text-align: center;
+    margin: 20px;
 }

@@ -29,12 +29,12 @@
 
     <div class="card-box">
         {% for animal in animals %}
-        <a class="card-link" href="{{ url_for('showToys', animal_id=animal.id) }}">
+        <a class="toys-link" href="{{ url_for('showToys', animal_id=animal.id) }}">
             <div class="card text-center">
                 <img class="card-img-top" src="{{ animal.photo }}" alt="Card image cap">
                 <div class="card-block">
                     <h4 class="card-title">{{ animal.name }}</h4>
-                    <p class="card-text">
+                    <p class="card-text text-muted">
                         Age: {{ animal.age }}
                         </br>
                         Species: {{ animal.species }}

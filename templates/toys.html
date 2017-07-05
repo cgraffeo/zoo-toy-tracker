@@ -28,7 +28,7 @@
             <img class="card-img-top" src="{{ toy.photo }}" alt="Card image cap">
             <div class="card-block">
                 <h4 class="card-title">{{ toy.name }}</h4>
-                <p class="card-text">{{ toy.description }}</p>
+                <p class="card-text text-muted">{{ toy.description }}</p>
             </div>
             <div class="card-footer">
                 <a class="card-link edit-btn" href="{{ url_for('editToy', animal_id=animal.id, toy_id=toy.id) }}">Edit</a>
