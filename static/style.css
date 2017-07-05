@@ -90,3 +90,12 @@ form img {
     max-width: 350px;
     max-height: 250px;
 }
+
+.del-group {
+    display: flex;
+    justify-content: center;
+}
+
+.del-group .btn {
+    margin: 0 5px;
+}
