@@ -1,15 +1,21 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, make_response, session as login_session
+from flask import Flask, render_template, request, redirect, jsonify, url_for,
+flash, make_response, session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Animal, Toy, User
-import random, string, os, json, requests, httplib2
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
-
+import random
+import string
+import os
+import json
+import requests
+import httplib2
 
 app = Flask(__name__)
 
 
-CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
+CLIENT_ID = json.loads(open('client_secrets.json',
+                            'r').read())['web']['client_id']
 APPLICATION_NAME = "Zoo Toy Tracker"
 
 
@@ -19,10 +25,12 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 @app.route('/')
 @app.route('/login')
 def showLogin():
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for
+                    x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
@@ -77,11 +85,13 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    # Get app's google credentials(client_id and client_secret) and google plus id, and check if they're empty
+    # Get app's google credentials(client_id and client_secret) and google
+    # plus id, and check if they're empty
     stored_credentials = login_session.get('credentials')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'), 200)
+        response = make_response(json.dumps('''Current user is already
+        connected.'''), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -114,7 +124,8 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ''' " style = "width: 300px; height: 300px;border-radius:
+    150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '''
     flash("You are now logged in as %s" % login_session['username'])
     print "DONE!"
     return output
@@ -123,20 +134,16 @@ def gconnect():
 # User Helper Functions
 def createUser(login_session):
     newUser = User(name=login_session['username'],
-                   email=login_session['email'], picture=login_session['picture'])
+                   email=login_session['email'],
+                   picture=login_session['picture'])
     session.add(newUser)
     session.commit()
     user = session.query(User).filter_by(email=login_session['email']).one()
     return user.id
 
 
-
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id=user_id).one()
-    # try:
-    #     user = session.query(User).filter_by(id=user_id).one()
-    # except:
-    #     user = None
     return user
 
 
@@ -158,7 +165,8 @@ def gdisconnect():
             json.dumps('Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    url = ('https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token'])
+    url = ('https://accounts.google.com/o/oauth2/revoke?token=%s' %
+            login_session['access_token'])
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     if result['status'] == '200':
@@ -172,7 +180,8 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return redirect(url_for('showAnimals'))
     else:
-        response = make_response(json.dumps('Failed to revoke token for given user.'), 400)
+        response = make_response(json.dumps('''Failed to revoke token for
+        given user.'''), 400)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -230,7 +239,9 @@ def editAnimal(animal_id):
     if 'username' not in login_session:
         return redirect('/login')
     if editedAnimal.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this animal. Please create your own animal in order to edit or remove.');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction() {alert('You are not authorized
+        to edit this animal. Please create your own animal in order to edit or
+        remove.');}</script><body onload='myFunction()''>"""
         return redirect(url_for('showAnimals'))
     if request.method == 'POST':
         if request.form['name']:
@@ -255,7 +266,9 @@ def deleteAnimal(animal_id):
     if 'username' not in login_session:
         return redirect('/login')
     if animalForRemoval.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to remove this animal. Please create your own animal in order to edit or remove.');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction() {alert('You are not authorized
+        to remove this animal. Please create your own animal in order to edit
+        or remove.');}</script><body onload='myFunction()''>"""
         return redirect(url_for('showAnimals'))
     if request.method == 'POST':
         session.delete(animalForRemoval)
@@ -272,10 +285,17 @@ def showToys(animal_id):
     animal = session.query(Animal).filter_by(id=animal_id).one()
     creator = getUserInfo(animal.user_id)
     toys = session.query(Toy).filter_by(animal_id=animal_id).all()
-    if 'username' not in login_session or creator.id != login_session['user_id']:
-        return render_template('publicToys.html', toys=toys, animal=animal, creator=creator)
+    if 'username' not in login_session or creator.id !=
+    login_session['user_id']:
+        return render_template('publicToys.html',
+                                toys=toys,
+                                animal=animal,
+                                creator=creator)
     else:
-        return render_template('toys.html', toys=toys, animal=animal, creator=creator)
+        return render_template('toys.html',
+                                toys=toys,
+                                animal=animal,
+                                creator=creator)
 
 
 @app.route('/animal/<int:animal_id>/toys/new/', methods=['GET', 'POST'])
@@ -284,7 +304,9 @@ def newToy(animal_id):
         return redirect('/login')
     animal = session.query(Animal).filter_by(id=animal_id).one()
     if login_session['user_id'] != animal.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to add toys for this animal. Please create your own animal in order to add, edit, or remove toys.');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction() {alert('You are not authorized
+        to add toys for this animal. Please create your own animal in order to
+        add, edit, or remove toys.');}</script><body onload='myFunction()''>"""
         return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         newToy = Toy(name=request.form['name'],
@@ -301,14 +323,18 @@ def newToy(animal_id):
         return render_template('newToy.html', animal_id=animal_id)
 
 
-@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/edit/', methods=['GET', 'POST'])
+@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/edit/',
+            methods=['GET', 'POST'])
 def editToy(animal_id, toy_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedToy = session.query(Toy).filter_by(id=toy_id).one()
     animal = session.query(Animal).filter_by(id=animal_id).one()
     if login_session['user_id'] != animal.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit toys for this animal. Please create your own animal in order to add, edit, or remove toys.');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction() {alert('You are not authorized
+        to edit toys for this animal. Please create your own animal in order
+        to add, edit, or remove toys.');}</script><body
+        onload='myFunction()''>"""
         return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         if request.form['name']:
@@ -324,17 +350,24 @@ def editToy(animal_id, toy_id):
         flash('{} successfully edited!'.format(editedToy.name))
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
-        return render_template('editToy.html', animal_id=animal_id, toy_id=toy_id, toy=editedToy)
+        return render_template('editToy.html',
+                                animal_id=animal_id,
+                                toy_id=toy_id,
+                                toy=editedToy)
 
 
-@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete/', methods=['GET', 'POST'])
+@app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete/',
+    methods=['GET', 'POST'])
 def deleteToy(animal_id, toy_id):
     if 'username' not in login_session:
         return redirect('/login')
     animal = session.query(Animal).filter_by(id=animal_id).one()
     toyForRemoval = session.query(Toy).filter_by(id=toy_id).one()
     if login_session['user_id'] != animal.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to remove toys for this animal. Please create your own animal in order to add, edit, or remove toys.');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction() {alert('You are not authorized
+        to remove toys for this animal. Please create your own animal in order
+        to add, edit, or remove toys.');}</script><body
+        onload='myFunction()''>"""
         return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         session.delete(toyForRemoval)
@@ -342,10 +375,13 @@ def deleteToy(animal_id, toy_id):
         flash('{} successfully deleted!'.format(toyForRemoval.name))
         return redirect(url_for('showToys', animal_id=animal_id))
     else:
-        return render_template('deleteToy.html', animal_id=animal_id, toy_id=toy_id, toy=toyForRemoval)
+        return render_template('deleteToy.html',
+                                animal_id=animal_id,
+                                toy_id=toy_id,
+                                toy=toyForRemoval)
 
 
 if __name__ == '__main__':
     app.secret_key = 'secret_key_!@#'
     app.debug = True
-    app.run(host = '0.0.0.0', port = 5000)
+    app.run(host='0.0.0.0', port=5000)
