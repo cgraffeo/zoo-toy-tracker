@@ -80,3 +80,13 @@ form h2 {
     text-align: center;
     margin: 20px;
 }
+
+.img-box {
+    display: flex;
+    justify-content: center;
+}
+
+form img {
+    max-width: 350px;
+    max-height: 250px;
+}

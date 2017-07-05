@@ -1,27 +1,40 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-<form action="{{ url_for('editAnimal', animal_id=animal.id) }}" method="post">
-
-    <h1>Edit {{ animal.name }}</h1>
-
-    <img src="{{ animal.photo }}" width="100" height="100">
-    </br>
-	<p>Name:</p>
-	<input type="text" size="30" name="name" placeholder="{{ animal.name }}">
-    </br>
-    <p>Age:</p>
-	<input type="number" size="30" name="age" placeholder="{{ animal.age }}">
-    </br>
-    <p>Species:</p>
-	<input type="text" size="30" name="species" placeholder="{{ animal.species }}">
-    </br>
-    <p>Photo URL(image address):</p>
-	<input type="text" size="30" name="photo" placeholder="{{ animal.photo }}">
-    </br>
-    </br>
-    <input type='submit' value='Save changes'>
-    <a href="{{ url_for('showAnimals') }}">Cancel</a>
-
-</form>
+<div class="container">
+    {% include "header.html" %}
+    <form action="{{ url_for('editAnimal', animal_id=animal.id) }}" method="post">
+        <h2>Edit {{ animal.name }}</h2>
+        <div class="form-group row img-box">
+            <img src="{{ animal.photo }}">
+        </div>
+        <div class="form-group row">
+			<label for="name" class="col-md-3">Name</label>
+			<div class="col-md-9">
+				<input class="form-control" type="text" size="30" name="name" id="name" placeholder="{{ animal.name }}">
+			</div>
+		</div>
+        <div class="form-group row">
+		    <label for="age" class="col-md-3">Age</label>
+			<div class="col-md-9">
+				<input class="form-control" type="number" size="30" name="age" id="age" placeholder="{{ animal.age }}">
+			</div>
+		</div>
+        <div class="form-group row">
+		    <label for="species" class="col-md-3">Species</label>
+			<div class="col-md-9">
+				<input class="form-control" type="text" size="30" name="species" id="species" placeholder="{{ animal.species }}">
+			</div>
+		</div>
+        <div class="form-group row">
+		    <label for="photo" class="col-md-3">Photo URL</label>
+			<div class="col-md-9">
+				<input class="form-control" type="url" size="30" name="photo" id="photo" placeholder="{{ animal.photo }}">
+			</div>
+		</div>
+        <div class="form-group float-right">
+		    <input class="btn btn-primary" type='submit' value='Save changes'>
+		    <a class="btn btn-secondary" href="{{ url_for('showAnimals') }}">Cancel</a>
+		</div>
+    </form>
+</div>
 {% endblock %}
