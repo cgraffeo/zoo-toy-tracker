@@ -1,24 +1,24 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-<h1>{{ animal.name }}</h1>
+<h1>{{animal.name}}</h1>
 
 </br>
-<a href="{{ url_for('showAnimals') }}">Show Animals</a>
+<a href="{{url_for('showAnimals')}}">Show Animals</a>
 </br>
 </br>
 
 {% for toy in toys %}
 
-Toy name: {{ toy.name }}
+Toy name: {{toy.name}}
 
 </br>
 
-Type: {{ toy.toy_type }}
+Type: {{toy.toy_type}}
 
 </br>
 
-Description: {{ toy.description }}
+Description: {{toy.description}}
 
 </br>
 </br>

@@ -15,7 +15,7 @@
 
                 <ul class="message-list">
                 {% for message in messages %}
-                    <li><strong>Awesome! </strong>{{ message }}</li>
+                    <li><strong>Awesome! </strong>{{message}}</li>
                 {% endfor %}
                 </ul>
                 {% endif %}
@@ -23,26 +23,26 @@
             </div>
         </div>
         <div class="col-md-2">
-            <a class="btn btn-primary float-right add-btn" href="{{ url_for('newAnimal') }}">Add animal</a>
+            <a class="btn btn-primary float-right add-btn" href="{{url_for('newAnimal')}}">Add animal</a>
         </div>
     </div>
 
     <div class="card-box">
         {% for animal in animals %}
-        <a class="toys-link" href="{{ url_for('showToys', animal_id=animal.id) }}">
+        <a class="toys-link" href="{{url_for('showToys', animal_id=animal.id)}}">
             <div class="card text-center">
-                <img class="card-img-top" src="{{ animal.photo }}" alt="Card image cap">
+                <img class="card-img-top" src="{{animal.photo}}" alt="Card image cap">
                 <div class="card-block">
-                    <h4 class="card-title">{{ animal.name }}</h4>
+                    <h4 class="card-title">{{animal.name}}</h4>
                     <p class="card-text text-muted">
-                        Age: {{ animal.age }}
+                        Age: {{animal.age}}
                         </br>
-                        Species: {{ animal.species }}
+                        Species: {{animal.species}}
                     </p>
                 </div>
                 <div class="card-footer">
-                    <a class="card-link edit-btn" href="{{ url_for('editAnimal', animal_id=animal.id) }}">Edit</a>
-                    <a class="card-link del-btn" href="{{ url_for('deleteAnimal', animal_id=animal.id) }}">Delete</a>
+                    <a class="card-link edit-btn" href="{{url_for('editAnimal', animal_id=animal.id)}}">Edit</a>
+                    <a class="card-link del-btn" href="{{url_for('deleteAnimal', animal_id=animal.id)}}">Delete</a>
                 </div>
             </div>
         </a>

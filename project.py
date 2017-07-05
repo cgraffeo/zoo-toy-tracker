@@ -1,15 +1,20 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for,
-flash, make_response, session as login_session
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Animal, Toy, User
-from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 import random
 import string
 import os
 import json
 import requests
 import httplib2
+
+from flask import Flask, render_template, request, redirect, jsonify, url_for,
+flash, make_response, session as login_session
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
+
+from database_setup import Base, Animal, Toy, User
+
 
 app = Flask(__name__)
 

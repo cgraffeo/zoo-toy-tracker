@@ -8,14 +8,14 @@
 
 {% for animal in animals %}
 
-Name: {{ animal.name }}
+Name: {{animal.name}}
 </br>
-Age: {{ animal.age }}
+Age: {{animal.age}}
 </br>
-Species: {{ animal.species }}
+Species: {{animal.species}}
 </br>
 </br>
-<a href="{{ url_for('showToys', animal_id=animal.id) }}"><p>Toys</p></a>
+<a href="{{url_for('showToys', animal_id=animal.id)}}"><p>Toys</p></a>
 
 {% endfor %}
 {% endblock %}

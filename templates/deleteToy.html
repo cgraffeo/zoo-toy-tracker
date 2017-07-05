@@ -2,14 +2,14 @@
 {% block content %}
 <div class="container">
     {% include "header.html" %}
-    <form action="{{ url_for('deleteToy', animal_id=animal_id, toy_id=toy_id) }}" method="post">
-        <h2> Are you sure you want to delete {{ toy.name }}?</h2>
+    <form action="{{url_for('deleteToy', animal_id=animal_id, toy_id=toy_id)}}" method="post">
+        <h2> Are you sure you want to delete {{toy.name}}?</h2>
         <div class="form-group row img-box">
-            <img src="{{ toy.photo }}">
+            <img src="{{toy.photo}}">
         </div>
         <div class="form-group del-group">
             <input class="btn btn-danger" type="submit", value="Delete">
-            <a class="btn btn-secondary" href="{{ url_for('showToys', animal_id=animal_id) }}">Cancel</a>
+            <a class="btn btn-secondary" href="{{url_for('showToys', animal_id=animal_id)}}">Cancel</a>
         </div>
     </form>
 </div>
