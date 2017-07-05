@@ -1,30 +1,43 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-<form action="{{ url_for('newToy', animal_id=animal_id) }}" method="post">
-
-	<p>Name:</p>
-	<input type="text" size="30" name="name">
-    </br>
-    <p>Type:</p>
-	<select name="toy_type">
-        <option value="Sensory">Sensory</option>
-        <option value="Foods and Feeding">Foods and Feeding</option>
-        <option value="Manipulative">Manipulative</option>
-        <option value="Environment">Environment</option>
-        <option value="Behavioral/Social">Behavioral/Social</option>
-    </select>
-    </br>
-    <p>Description:</p>
-	<textarea name="description"></textarea>
-    </br>
-    <p>Photo URL(image address):</p>
-	<input type="text" size="30" name="photo">
-    </br>
-    </br>
-    <input type='submit' value='Create'>
-    </br>
-    </br>
-    <a href="{{ url_for('showToys', animal_id=animal_id) }}">Cancel</a>
-</form>
+<div class="container">
+	{% include "header.html" %}
+	<form action="{{ url_for('newToy', animal_id=animal_id) }}" method="post">
+		<h2>Add Toy</h2>
+		<div class="form-group row">
+			<label for="name" class="col-md-3">Name</label>
+			<div class="col-md-9">
+				<input class="form-control" type="text" size="30" name="name" id="name">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="toy_type" class="col-md-3">Type</label>
+			<div class="col-md-9">
+				<select class="custom-select" name="toy_type" id="toy_type">
+			        <option value="Sensory">Sensory</option>
+			        <option value="Foods and Feeding">Foods and Feeding</option>
+			        <option value="Manipulative">Manipulative</option>
+			        <option value="Environment">Environment</option>
+			        <option value="Behavioral/Social">Behavioral/Social</option>
+			    </select>
+			</div>
+		</div>
+		<div class="form-group row">
+	    	<label for="description" class="col-md-3">Description</label>
+			<div class="col-md-9">
+				<textarea class="form-control" name="description" id="description"></textarea>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="photo" class="col-md-3">Photo URL</label>
+			<div class="col-md-9">
+				<input class="form-control" type="text" size="30" name="photo" id="photo">
+			</div>
+		</div>
+		<div class="form-group float-right">
+			<input class="btn btn-primary" type='submit' value='Create'>
+	    	<a class="btn btn-secondary" href="{{ url_for('showToys', animal_id=animal_id) }}">Cancel</a>
+		</div>
+	</form>
+</div>
 {% endblock %}
