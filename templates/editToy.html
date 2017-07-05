@@ -1,58 +1,70 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-<form action="{{ url_for('editToy', animal_id=animal_id, toy_id=toy_id) }}" method="post">
+<div class="container">
+    {% include "header.html" %}
+    <form action="{{ url_for('editToy', animal_id=animal_id, toy_id=toy_id) }}" method="post">
+        <h2>Edit {{ toy.name }}</h2>
+        <div class="form-group row img-box">
+            <img src="{{ toy.photo }}">
+        </div>
+        <div class="form-group row">
+			<label for="name" class="col-md-3">Name</label>
+			<div class="col-md-9">
+				<input class="form-control" type="text" size="30" name="name" id="name" placeholder="{{ toy.name }}">
+			</div>
+		</div>
+        <div class="form-group row">
+            <label for="toy_type" class="col-md-3">Type</label>
+            <div class="col-md-9">
+            	<select class="custom-select" name="toy_type">
+                    {% if toy.toy_type == 'Sensory' %}
+                    <option value="Sensory" selected>Sensory</option>
+                    {% else %}
+                    <option value="Sensory">Sensory</option>
+                    {% endif %}
 
-    <h1>Edit {{ toy.name }}</h1>
-    </br>
-    <img src="{{ toy.photo }}" width="100" height="100">
-    </br>
-	<p>Name:</p>
-	<input type="text" size="30" name="name" placeholder="{{ toy.name }}">
-    </br>
-    <p>Type:</p>
-	<select name="toy_type">
+                    {% if toy.toy_type == 'Foods and Feeding' %}
+                    <option value="Foods and Feeding" selected>Foods and Feeding</option>
+                    {% else %}
+                    <option value="Foods and Feeding">Foods and Feeding</option>
+                    {% endif %}
 
-        {% if toy.toy_type == 'Sensory' %}
-        <option value="Sensory" selected>Sensory</option>
-        {% else %}
-        <option value="Sensory">Sensory</option>
-        {% endif %}
+                    {% if toy.toy_type == 'Manipulative' %}
+                    <option value="Manipulative" selected>Manipulative</option>
+                    {% else %}
+                    <option value="Manipulative">Manipulative</option>
+                    {% endif %}
 
-        {% if toy.toy_type == 'Foods and Feeding' %}
-        <option value="Foods and Feeding" selected>Foods and Feeding</option>
-        {% else %}
-        <option value="Foods and Feeding">Foods and Feeding</option>
-        {% endif %}
+                    {% if toy.toy_type == 'Environmental' %}
+                    <option value="Environmental" selected>Environmental</option>
+                    {% else %}
+                    <option value="Environmental">Environmental</option>
+                    {% endif %}
 
-        {% if toy.toy_type == 'Manipulative' %}
-        <option value="Manipulative" selected>Manipulative</option>
-        {% else %}
-        <option value="Manipulative">Manipulative</option>
-        {% endif %}
-
-        {% if toy.toy_type == 'Environmental' %}
-        <option value="Environmental" selected>Environmental</option>
-        {% else %}
-        <option value="Environmental">Environmental</option>
-        {% endif %}
-
-        {% if toy.toy_type =='Behavioral/Social' %}
-        <option value="Behavioral/Social" selected>Behavioral/Social</option>
-        {% else %}
-        <option value="Behavioral/Social">Behavioral/Social</option>
-        {% endif %}
-
-    </select>
-    </br>
-    <p>Description:</p>
-	<textarea name="description" placeholder="{{ toy.description }}"></textarea>
-    </br>
-    <p>Photo URL(image address):</p>
-	<input type="text" size="30" name="photo" placeholder="{{ toy.photo }}">
-    </br>
-    </br>
-    <input type="submit" value="Save changes">
-
-</form>
+                    {% if toy.toy_type =='Behavioral/Social' %}
+                    <option value="Behavioral/Social" selected>Behavioral/Social</option>
+                    {% else %}
+                    <option value="Behavioral/Social">Behavioral/Social</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+	    	<label for="description" class="col-md-3">Description</label>
+			<div class="col-md-9">
+				<textarea class="form-control" name="description" id="description" placeholder="{{ toy.description }}"></textarea>
+			</div>
+		</div>
+        <div class="form-group row">
+			<label for="photo" class="col-md-3">Photo URL</label>
+			<div class="col-md-9">
+				<input class="form-control" type="text" size="30" name="photo" id="photo" placeholder="{{ toy.photo }}">
+			</div>
+		</div>
+        <div class="form-group float-right">
+            <input class="btn btn-primary" type="submit" value="Save changes">
+            <a class="btn btn-secondary" href="{{ url_for('showToys', animal_id=animal_id) }}">Cancel</a>
+        </div>
+    </form>
+</div>
 {% endblock %}
