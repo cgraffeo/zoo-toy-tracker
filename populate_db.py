@@ -70,7 +70,7 @@ tiger1 = Animal(name='Kazek', age=13, species='Tiger', photo='http://www.wildaid
 session.add(tiger1)
 session.commit()
 
-tiger1_toy1 = Toy(name='Disco Ball', toy_type='Sensory', description='The little lights off this disco ball are like using a laser on a house cat; The tigers love to chase them around.', animal=tiger1, user_id=1)
+tiger1_toy1 = Toy(name='Disco Ball', toy_type='Sensory', description='The little lights off this disco ball are like using a laser on a house cat; The tigers love to chase them around.', photo='https://images-na.ssl-images-amazon.com/images/I/61ynRSp-T1L._SY355_.jpg' animal=tiger1, user_id=1)
 
 session.add(tiger1_toy1)
 session.commit()
@@ -82,7 +82,7 @@ crocodile1 = Animal(name='Kwan', age=6, species='Crocodile', photo='https://s-me
 session.add(crocodile1)
 session.commit()
 
-crocodile1_toy1 = Toy(name='Branches', toy_type='Environmental', description='The crocs love to hide in the branches. Maybe they like the privacy?', animal=crocodile1, user_id=1)
+crocodile1_toy1 = Toy(name='Branches', toy_type='Environmental', description='The crocs love to hide in the branches. Maybe they like the privacy?', photo='http://cdn3.volusion.com/uakvg.mdecs/v/vspfiles/photos/BBNR18-2.jpg?1420709474' animal=crocodile1, user_id=1)
 
 session.add(crocodile1_toy1)
 session.commit()
@@ -94,7 +94,7 @@ eagle1 = Animal(name='Sam', age=4, species='Bald Eagle', photo='https://identify
 session.add(eagle1)
 session.commit()
 
-eagle1_toy1 = Toy(name='Straw Pile', toy_type='Environmental', description='The eagles love to carry this into their favorite corner of the exhibit. Seems like they try to build a nest with it.', animal=eagle1, user_id=1)
+eagle1_toy1 = Toy(name='Straw Pile', toy_type='Environmental', description='The eagles love to carry this into their favorite corner of the exhibit. Seems like they try to build a nest with it.', photo='https://blenderartists.org/forum/attachment.php?attachmentid=218183&d=1361347213' animal=eagle1, user_id=1)
 
 session.add(eagle1_toy1)
 session.commit()
