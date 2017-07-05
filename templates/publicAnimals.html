@@ -1,21 +1,38 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-<h1>Animals</h1>
+<div class="container">
+    {% include "header.html" %}
+    {% include "carousel.html" %}
 
-</br>
-</br>
+    <div class="row page-title">
+        <div class="col-md-12">
+            <h2>Animals</h2>
+        </div>
+    </div>
 
-{% for animal in animals %}
+    <div class="row">
+        <div class="col-md-12 text-muted instructions">
+            Click on an animal's card to see its toys
+        </div>
+    </div>
 
-Name: {{animal.name}}
-</br>
-Age: {{animal.age}}
-</br>
-Species: {{animal.species}}
-</br>
-</br>
-<a href="{{url_for('showToys', animal_id=animal.id)}}"><p>Toys</p></a>
+    <div class="card-box">
+        {% for animal in animals %}
+        <a class="toys-link" href="{{url_for('showToys', animal_id=animal.id)}}">
+            <div class="card text-center">
+                <img class="card-img-top" src="{{animal.photo}}" alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">{{animal.name}}</h4>
+                    <p class="card-text text-muted">
+                        Age: {{animal.age}}
+                        </br>
+                        Species: {{animal.species}}
+                    </p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 
-{% endfor %}
+</div>
 {% endblock %}

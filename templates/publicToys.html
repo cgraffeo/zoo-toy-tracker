@@ -1,26 +1,25 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-<h1>{{animal.name}}</h1>
-
-</br>
-<a href="{{url_for('showAnimals')}}">Show Animals</a>
-</br>
-</br>
-
-{% for toy in toys %}
-
-Toy name: {{toy.name}}
-
-</br>
-
-Type: {{toy.toy_type}}
-
-</br>
-
-Description: {{toy.description}}
-
-</br>
-</br>
-{% endfor %}
+<div class="container">
+    {% include "header.html" %}
+    <div class="row page-title">
+        <div class="col-md-12">
+            <h2>{{animal.name}}</h2>
+        </div>
+    </div>
+    <div>
+        <a class="back-btn" href="{{url_for('showAnimals')}}">Back</a>
+    </div>
+    <div class="card-box">
+        {% for toy in toys %}
+        <div class="card text-center">
+            <img class="card-img-top" src="{{toy.photo}}" alt="Card image cap">
+            <div class="card-block">
+                <h4 class="card-title">{{toy.name}}</h4>
+                <p class="card-text text-muted">{{toy.description}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
