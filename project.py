@@ -205,6 +205,7 @@ def oneAnimalsToysJSON(animal_id):
 def oneAnimalsOneToyJSON(animal_id, toy_id):
     oneToy = session.query(Toy).filter_by(id=toy_id).one()
     return jsonify(oneToy=oneToy.serialize)
+# End JSON routes
 
 
 @app.route('/animals/')
