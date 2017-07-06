@@ -91,6 +91,12 @@ form h2 {
     margin: 20px;
 }
 
+.form-text {
+    margin-left: -14px;
+    margin-top: -10px;
+    font-size: .95em;
+}
+
 .img-box {
     display: flex;
     justify-content: center;

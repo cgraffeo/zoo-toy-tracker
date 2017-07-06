@@ -27,6 +27,11 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+def login_required():
+    if 'username' not in login_session:
+        return redirect('/login')
+
+
 @app.route('/')
 @app.route('/login')
 def showLogin():
@@ -219,8 +224,7 @@ def showAnimals():
 
 @app.route('/animal/new/', methods=['GET', 'POST'])
 def newAnimal():
-    if 'username' not in login_session:
-        return redirect('/login')
+    login_required()
     if request.method == 'POST':
         newAnimal = Animal(name=request.form['name'],
                            age=request.form['age'],
@@ -237,13 +241,11 @@ def newAnimal():
 
 @app.route('/animal/<int:animal_id>/edit/', methods=['GET', 'POST'])
 def editAnimal(animal_id):
+    login_required()
     editedAnimal = session.query(Animal).filter_by(id=animal_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
     if editedAnimal.user_id != login_session['user_id']:
-        return """<script>function myFunction() {alert('You are not authorized
-        to edit this animal. Please create your own animal in order to edit or
-        remove.');}</script><body onload='myFunction()''>"""
+        flash('You are not authorized to edit this animal.'
+              'Please create your own animal in order to add, edit or remove.')
         return redirect(url_for('showAnimals'))
     if request.method == 'POST':
         if request.form['name']:
@@ -264,13 +266,11 @@ def editAnimal(animal_id):
 
 @app.route('/animal/<int:animal_id>/delete/', methods=['GET', 'POST'])
 def deleteAnimal(animal_id):
+    login_required()
     animalForRemoval = session.query(Animal).filter_by(id=animal_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
     if animalForRemoval.user_id != login_session['user_id']:
-        return """<script>function myFunction() {alert('You are not authorized
-        to remove this animal. Please create your own animal in order to edit
-        or remove.');}</script><body onload='myFunction()''>"""
+        flash('You are not authorized to edit this animal.'
+              'Please create your own animal in order to add, edit or remove.')
         return redirect(url_for('showAnimals'))
     if request.method == 'POST':
         session.delete(animalForRemoval)
@@ -301,13 +301,11 @@ def showToys(animal_id):
 
 @app.route('/animal/<int:animal_id>/toys/new/', methods=['GET', 'POST'])
 def newToy(animal_id):
-    if 'username' not in login_session:
-        return redirect('/login')
+    login_required()
     animal = session.query(Animal).filter_by(id=animal_id).one()
     if login_session['user_id'] != animal.user_id:
-        return """<script>function myFunction() {alert('You are not authorized
-        to add toys for this animal. Please create your own animal in order to
-        add, edit, or remove toys.');}</script><body onload='myFunction()''>"""
+        flash('You are not authorized to add toys for this animal.'
+              'Please create your own animal in order to add, edit or remove.')
         return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         newToy = Toy(name=request.form['name'],
@@ -327,15 +325,12 @@ def newToy(animal_id):
 @app.route('/animal/<int:animal_id>/toys/<int:toy_id>/edit/',
             methods=['GET', 'POST'])
 def editToy(animal_id, toy_id):
-    if 'username' not in login_session:
-        return redirect('/login')
+    login_required()
     editedToy = session.query(Toy).filter_by(id=toy_id).one()
     animal = session.query(Animal).filter_by(id=animal_id).one()
     if login_session['user_id'] != animal.user_id:
-        return """<script>function myFunction() {alert('You are not authorized
-        to edit toys for this animal. Please create your own animal in order
-        to add, edit, or remove toys.');}</script><body
-        onload='myFunction()''>"""
+        flash('You are not authorized to edit this toy.'
+              'Please create your own animal in order to add, edit or remove.')
         return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         if request.form['name']:
@@ -360,15 +355,12 @@ def editToy(animal_id, toy_id):
 @app.route('/animal/<int:animal_id>/toys/<int:toy_id>/delete/',
             methods=['GET', 'POST'])
 def deleteToy(animal_id, toy_id):
-    if 'username' not in login_session:
-        return redirect('/login')
+    login_required()
     animal = session.query(Animal).filter_by(id=animal_id).one()
     toyForRemoval = session.query(Toy).filter_by(id=toy_id).one()
     if login_session['user_id'] != animal.user_id:
-        return """<script>function myFunction() {alert('You are not authorized
-        to remove toys for this animal. Please create your own animal in order
-        to add, edit, or remove toys.');}</script><body
-        onload='myFunction()''>"""
+        flash('You are not authorized to edit this toy.'
+              'Please create your own animal in order to add, edit or remove.')
         return redirect(url_for('showToys', animal_id=animal_id))
     if request.method == 'POST':
         session.delete(toyForRemoval)
