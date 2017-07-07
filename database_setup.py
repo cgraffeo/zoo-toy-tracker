@@ -1,8 +1,11 @@
 import sys
+from sqlalchemy import create_engine
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
+from sqlalchemy.orm import backref
+
+
 
 Base = declarative_base()
 
@@ -47,7 +50,7 @@ class Toy(Base):
     toy_type = Column(String(10))
     description = Column(String(250))
     photo = Column(String(250))
-    animal = relationship(Animal)
+    animal = relationship(Animal, backref=backref('toy', cascade='all,delete'))
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship(User)
 

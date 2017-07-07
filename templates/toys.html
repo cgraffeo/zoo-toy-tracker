@@ -21,6 +21,13 @@
             <a class="btn btn-primary float-right add-btn" href="{{url_for('newToy', animal_id=animal.id)}}">Add toy</a>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12 text-muted instructions">
+            If no toys currently exist, add one!
+        </div>
+    </div>
+
     <div>
         <a class="back-btn" href="{{url_for('showAnimals')}}">Back</a>
     </div>
