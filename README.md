@@ -10,7 +10,6 @@ The target user base of this application is zoo keepers and other zoo personnel.
 This application is made up of several files, most being templates:
 - `project.py` Web server, template rendering, and routing is all done here.
 - `database_setup.py` Database schema defined here, and will create `animal_toys.db`.
-- `populate_db.py` Populates the db to give some data to start with.
 - `client_secrets.json` Provides the client ID and client secret from Google for use with OAuth.
 - `templates/` Contains all HTML templates. Each file's name should be self-explanatory.
 - `static/` Contains the single style file: `style.css`.
@@ -23,7 +22,6 @@ Before you start the application, you'll want to run a few files first:
 1. Clone this repository.
 2. Navigate to this project's directory in the python shell.
 3. Run `database_setup.py`.
-4. Run `populate_db.py`.
 5. Run `project.py`.
 6. In a browser(preferably Chrome), go to `localhost:5000`(If port 5000 is occupied on your machine, change the port for the web server at the bottom of the `project.py` file).
 
