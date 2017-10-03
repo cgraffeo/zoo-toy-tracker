@@ -2,7 +2,7 @@
 Source code for an application that supports creating, editing, and deleting various items in a database.
 
 ## Summary
-This is a project for the Udacity Full Stack Web Development Nanodegree. This project is a web application that was built using Python on the Flask framework for the server code, and SQLAlchemy for the database operations. It also makes use of OAuth with Google's API for user authentication(Google Sign-in).
+This is a project for the Udacity Full Stack Web Development Nanodegree. This project is a web application that was built using Python on the Flask framework for the server code, SQLAlchemy for the database operations, OAuth with Google's API for user authentication(Google Sign-in), and Bootstrap for styling and layout.
 
 The target user base of this application is zoo keepers and other zoo personnel. It provides a database in which they can manage(add, edit, delete) several animals and each animal's toys(a.k.a enrichment devices).
 
