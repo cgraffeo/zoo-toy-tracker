@@ -377,4 +377,6 @@ def deleteToy(animal_id, toy_id):
 if __name__ == '__main__':
     app.secret_key = 'secret_key_!@#'
     app.debug = True
-    app.run(host='0.0.0.0', port=8030)
+    # Bind to PORT if defined, otherwise default to 8030.
+    port = int(os.environ.get('PORT', 8030))
+    app.run(host='0.0.0.0', port=port)
