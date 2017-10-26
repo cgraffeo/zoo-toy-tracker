@@ -32,7 +32,6 @@ def login_required():
         return redirect('/login')
 
 
-@app.route('/')
 @app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
@@ -213,6 +212,7 @@ def oneAnimalsOneToyJSON(animal_id, toy_id):
 # End JSON routes
 
 
+@app.route('/')
 @app.route('/animals/')
 def showAnimals():
     animals = session.query(Animal).all()
