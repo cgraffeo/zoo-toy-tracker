@@ -1,125 +1,125 @@
 .signin-container {
-    text-align: center;
-    margin-top: 100px;
+  text-align: center;
+  margin-top: 100px;
 }
 
 .title-center {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 #result {
-    font-size: 1.5em;
+  font-size: 1.5em;
+}
+
+body {
+  background-color: #ddd;
 }
 
 .container {
-    max-width: 900px;
+  max-width: 900px;
+  background: #fff;
+  height: 100vh;
+  padding: 0;
+  box-shadow: 0 0 4px 2px #999;
 }
 
 .carousel-slide {
-    width: 100%;
-    height: 450px;
+  width: 100%;
+  height: 450px;
 }
 
 .page-title {
-    height: 40px;
-    margin: 10px 0;
+  height: 40px;
+  margin: 10px 0;
 }
 
 .message-list {
-    text-align: center;
-    list-style-type: none;
-    padding-top: 10px;
+  text-align: center;
+  list-style-type: none;
+  padding-top: 10px;
 }
 
 .message-list li {
-    color: #3c763d;
+  color: #3c763d;
 }
 
 .add-btn {
-    margin-top: 2px;
+  margin-top: 2px;
 }
 
 .instructions {
-    margin-left: 15px;
-    margin-bottom: 10px;
+  margin-left: 15px;
+  margin-bottom: 10px;
 }
 
 .card-box {
-    display: flex;
-    justify-content: center;
-    align-content: space-around;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-content: space-around;
+  flex-wrap: wrap;
 }
 
 .card {
-    width: 180px;
-    margin: 10px;
+  width: 180px;
+  margin: 10px;
 }
 
 .toys-link {
-    color: #000;
+  color: #000;
 }
 
 .toys-link:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .card img {
-    height: 150px;
-    width: 100%;
+  height: 150px;
+  width: 100%;
 }
 
 .card-text {
-    font-size: 14px;
-}
-
-.edit-btn {
-    color: #0275d8;
-}
-
-.del-btn {
-    color: #d9534f;
+  font-size: 14px;
 }
 
 form {
-    width: 400px;
-    margin: 20px auto;
+  width: 400px;
+  margin: 20px auto;
 }
 
 form h2 {
-    text-align: center;
-    margin: 20px;
+  text-align: center;
+  margin: 20px;
 }
 
 .form-text {
-    margin-left: -14px;
-    margin-top: -10px;
-    font-size: .95em;
+  margin-left: -14px;
+  margin-top: -10px;
+  font-size: .95em;
 }
 
 .img-box {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 form img {
-    max-width: 350px;
-    max-height: 250px;
+  max-width: 350px;
+  max-height: 250px;
 }
 
 .del-group {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .del-group .btn {
-    margin: 0 5px;
+  margin: 0 5px;
 }
 
 .back-btn {
-    margin-left: 15px;
+  margin-left: 15px;
 }
 
 .back-btn:hover {
-    text-decoration: none;
+  text-decoration: none;
 }

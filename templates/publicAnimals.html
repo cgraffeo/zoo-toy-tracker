@@ -1,38 +1,83 @@
 {% extends "main.html" %}
 {% block content %}
 <div class="container">
-    {% include "header.html" %}
-    {% include "carousel.html" %}
+  {% include "header.html" %}
+  {% include "carousel.html" %}
 
-    <div class="row page-title">
-        <div class="col-md-12">
-            <h2>Animals</h2>
+  <div class="row page-title">
+    <div class="col-md-12">
+      <h2>Animals</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 text-muted instructions">
+      Log in to add, edit, and delete animals and their toys.
+    </div>
+  </div>
+
+  <div class="card-box">
+    <a class="toys-link" href="#">
+      <div class="card text-center">
+        <img class="card-img-top" src="{{url_for('static', filename='images/giraffe.JPG')}}" alt="Card image cap">
+        <div class="card-block">
+          <h4 class="card-title">Riley</h4>
+          <p class="card-text text-muted">
+            Age: 22
+          </br>
+            Species: Giraffe
+          </p>
+          <button class="btn btn-sm btn-primary edit-btn" href="#" disabled>Edit</button>
+          <button class="btn btn-sm btn-danger del-btn" href="#" disabled>Delete</button>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 text-muted instructions">
-            Click on an animal's card to see its toys
+      </div>
+    </a>
+    <a class="toys-link" href="#">
+      <div class="card text-center">
+        <img class="card-img-top" src="{{url_for('static', filename='images/gorilla.jpg')}}" alt="Card image cap">
+        <div class="card-block">
+          <h4 class="card-title">Tino</h4>
+          <p class="card-text text-muted">
+            Age: 15
+          </br>
+            Species: Gorilla
+          </p>
+          <button class="btn btn-sm btn-primary edit-btn" href="#" disabled>Edit</button>
+          <button class="btn btn-sm btn-danger del-btn" href="#" disabled>Delete</button>
         </div>
-    </div>
-
-    <div class="card-box">
-        {% for animal in animals %}
-        <a class="toys-link" href="{{url_for('showToys', animal_id=animal.id)}}">
-            <div class="card text-center">
-                <img class="card-img-top" src="{{animal.photo}}" alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">{{animal.name}}</h4>
-                    <p class="card-text text-muted">
-                        Age: {{animal.age}}
-                        </br>
-                        Species: {{animal.species}}
-                    </p>
-                </div>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
+      </div>
+    </a>
+    <a class="toys-link" href="#">
+      <div class="card text-center">
+        <img class="card-img-top" src="{{url_for('static', filename='images/elephant.jpeg')}}" alt="Card image cap">
+        <div class="card-block">
+          <h4 class="card-title">Zuri</h4>
+          <p class="card-text text-muted">
+            Age: 10
+          </br>
+            Species: Elephant
+          </p>
+          <button class="btn btn-sm btn-primary edit-btn" href="#" disabled>Edit</button>
+          <button class="btn btn-sm btn-danger del-btn" href="#" disabled>Delete</button>
+        </div>
+      </div>
+    </a>
+    <a class="toys-link" href="#">
+      <div class="card text-center">
+        <img class="card-img-top" src="{{url_for('static', filename='images/crocodile.jpg')}}" alt="Card image cap">
+        <div class="card-block">
+          <h4 class="card-title">Kwan</h4>
+          <p class="card-text text-muted">
+            Age: 6
+          </br>
+            Species: Crocodile
+          </p>
+          <button class="btn btn-sm btn-primary edit-btn" href="#" disabled>Edit</button>
+          <button class="btn btn-sm btn-danger del-btn" href="#" disabled>Delete</button>
+        </div>
+      </div>
+    </a>
+  </div>
 
 </div>
 {% endblock %}
