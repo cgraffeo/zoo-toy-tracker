@@ -4,13 +4,95 @@ import os
 import json
 import requests
 import httplib2
+from urllib import parse
+import psycopg2
 from flask import Flask, render_template, request, redirect, jsonify, url_for
 from flask import flash, make_response, session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
-from database_setup import Base, Animal, Toy, User
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import backref
 
+
+Base = declarative_base()
+
+
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture = Column(String(250))
+
+
+class Animal(Base):
+    __tablename__ = 'animal'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(30), nullable=False)
+    age = Column(Integer)
+    species = Column(String(50), nullable=False)
+    photo = Column(String(250))
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    user = relationship(User)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'species': self.species,
+            'photo': self.photo
+        }
+
+
+class Toy(Base):
+    __tablename__ = 'toy'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(80), nullable=False)
+    animal_id = Column(Integer, ForeignKey('animal.id'))
+    toy_type = Column(String(10))
+    description = Column(String(250))
+    photo = Column(String(250))
+    animal = relationship(Animal, backref=backref('toy', cascade='all,delete'))
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    user = relationship(User)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'animal_id': self.animal_id,
+            'toy_type': self.toy_type,
+            'description': self.description,
+            'photo': self.photo
+        }
+
+
+parse.uses_netloc.append("postgres")
+url = parse.urlparse(os.environ["DATABASE_URL"])
+
+conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
+
+engine = create_engine(conn)
+Base.metadata.bind = engine
+Base.metadata.create_all(engine)
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 app = Flask(__name__)
 
@@ -20,12 +102,8 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "Zoo Toy Tracker"
 
 
-engine = create_engine('sqlite:///animal_toys.db')
+# engine = create_engine('sqlite:///animal_toys.db')
 # engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 
 def login_required():
@@ -201,7 +279,6 @@ def animalsJSON():
 
 @app.route('/animal/<int:animal_id>/toys/JSON/')
 def oneAnimalsToysJSON(animal_id):
-    animal = session.query(Animal).filter_by(id=animal_id).one()
     toys = session.query(Toy).filter_by(animal_id=animal_id).all()
     return jsonify(Toys=[toy.serialize for toy in toys])
 
