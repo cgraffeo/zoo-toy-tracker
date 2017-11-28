@@ -1,6 +1,10 @@
+body {
+  background-color: #ddd;
+}
+
 .signin-container {
   text-align: center;
-  margin-top: 100px;
+  padding-top: 100px;
 }
 
 .title-center {
@@ -9,10 +13,6 @@
 
 #result {
   font-size: 1.5em;
-}
-
-body {
-  background-color: #ddd;
 }
 
 .container {
