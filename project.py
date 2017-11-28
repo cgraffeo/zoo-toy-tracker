@@ -87,7 +87,7 @@ conn = psycopg2.connect(
     port=url.port
 )
 
-engine = create_engine(conn)
+engine = create_engine(url)
 Base.metadata.bind = engine
 Base.metadata.create_all(engine)
 
