@@ -103,7 +103,6 @@ APPLICATION_NAME = "Zoo Toy Tracker"
 
 
 # engine = create_engine('sqlite:///animal_toys.db')
-# engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 
 
 def login_required():
