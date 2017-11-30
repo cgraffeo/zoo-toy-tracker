@@ -76,18 +76,7 @@ class Toy(Base):
         }
 
 
-parse.uses_netloc.append("postgres")
-url = parse.urlparse(os.environ["DATABASE_URL"])
-
-conn = psycopg2.connect(
-    database=url.path[1:],
-    user=url.username,
-    password=url.password,
-    host=url.hostname,
-    port=url.port
-)
-
-engine = create_engine('postgres://vbwxjdofuscpvp:8717923a1c86c9067437ea0dc21798071986bd061e227db7a09240f1e6164bc6@ec2-54-221-246-84.compute-1.amazonaws.com:5432/dcfbj18dvgchdm')
+engine = create_engine(os.environ.get('DATABASE_URL'))
 Base.metadata.bind = engine
 Base.metadata.create_all(engine)
 
